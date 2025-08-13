@@ -49,6 +49,7 @@ import { config } from '../../config'
 import { Request, Response } from 'express'
 import { apiResponse } from '../common';
 import { responseMessage } from './response';
+import { userModel } from '../database';
 
 
 
@@ -60,7 +61,15 @@ export const adminJWT = async (req:Request, res:Response,next)=>{
     result:any
     if(authorization){
         try{
-            // let isVerifyToken = jwt.verify(au)
+            let isVerifyToken = jwt.verify(authorization,jwt_token_secret)
+            result = await userModel.findOne({_id: new ObjectId(isVerifyToken._id),isDeleted:false}).populate("roleId").lean()
+            if(result?.isBlocked == true) return res.status(410).json(new apiResponse(410,responseMessage?.accountBlock,{},{}));
+            if(result?.isDeleted == false){
+                req.headers.user = result
+                return next()
+            }else{
+                return res.status(401).json(new apiResponse(401,responseMessage?.invalidToken,{},{}))
+            }
 
         }catch(err){
             if(err.message =="invalid signature") return res.status(403).json(new apiResponse(403,responseMessage?.differentToken,{},{}))
@@ -73,4 +82,24 @@ export const adminJWT = async (req:Request, res:Response,next)=>{
         return res.status(401).json(new apiResponse(401,responseMessage?.tokenNotFound,{},{}))
     }
 
+}
+
+export const userJWT = async(req:Request,res:Response,next)=>{
+    let {authorization} = req.headers,result:any
+    try{
+        let isVerifyToken = jwt.verify(authorization,jwt_token_secret)
+        result = await userModel.findOne({_id:new ObjectId(isVerifyToken._id),isDeleted:false}).populate("roleId").lean()
+        if(result?.isBlocked == true) return res.status(410).json(new apiResponse(410,responseMessage?.accountBlock,{},{}));
+        if(result?.isDeleted == false){
+            req.headers.user = result
+            return next()
+        }else{
+            return next()
+        }
+
+    }catch(err){
+        console.log(err);
+        return next()
+        
+    }
 }

@@ -1,5 +1,4 @@
 
-import { use } from "react";
 import { config } from "../../../config";
 import { apiResponse } from "../../common";
 import { userModel, userSessionModel } from "../../database";
@@ -70,6 +69,7 @@ export const login = async (req, res) => {
         response = {
             user: {
                 userType: response?.userType,
+                name: response?.name,
                 _id: response?._id,
                 email: response?.email,
                 phoneNumber: response?.phoneNumber,
