@@ -8,7 +8,8 @@ export const createCategory = async(req,res)=>{
     reqInfo(req)
     try{
         const body = req.body;
-        let isExist = await categoryModel.findOne({name:body})
+        let isExist = await categoryModel.findOne({priority:body.priority,isDeleted:false})
+        // if(isExist) return res.status(404).json(new api)
 
     }catch(error){
         console.log(error);

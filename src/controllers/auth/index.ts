@@ -8,10 +8,6 @@ import jwt from 'jsonwebtoken'
 
 const jwt_token_secret = config.JWT_TOKEN_SECRET
 
-
-
-
-
 export const signup = async (req, res) => {
     reqInfo(req)
     try {
@@ -90,7 +86,7 @@ export const login = async (req, res) => {
     }
 }
 
-export const reset_password = async (req, res) => {
+export const change_password = async (req, res) => {
     reqInfo(req)
     let body = req.body
     try {
@@ -122,4 +118,3 @@ export const reset_password = async (req, res) => {
     }
 }
 
-// export const 
