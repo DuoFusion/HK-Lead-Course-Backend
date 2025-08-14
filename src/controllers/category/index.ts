@@ -34,14 +34,14 @@ export const editCategory = async(req,res)=>{
     body = req.body;
     try{
         let isExist = await categoryModel.findOne({priority:body.priority,isDeleted:false,_id: { $ne: (body.id)}});
-        if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}))
+        if(!isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}))
 
         // if(body.parent){
         //     const parent = await getFirstMatch(categoryModel,{_id:body.parent},{},{});
         //     if(parent)body.level = parent.level+1;
         // }
 
-        const response = await updateData(categoryModel,{_id:categoryId},body,{});
+        const response = await updateData(categoryModel,{_id:categoryId, isDeleted:false},{body},{new:true});
         if(!response)return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Category'),{},{}));
         return res.status(200).json(new apiResponse(500,responseMessage.updateDataSuccess('Category'),response,{}));
 
