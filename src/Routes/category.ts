@@ -7,7 +7,7 @@ const router = Router();
 router.use(adminJWT)
 router.post('/add',createCategory)
 router.post('/edit',editCategory)
-router.delete('/:id',deleteCategory)
+router.delete('/delete/:id',deleteCategory)
 router.get('/',getCategories)
 
 export const categoryRoutes = router;
