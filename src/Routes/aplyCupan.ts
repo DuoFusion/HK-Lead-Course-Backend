@@ -1,8 +1,9 @@
 import express from 'express';
-import { addCupan } from '../controllers/aplyCupan';
+import { addCupan, getCupan } from '../controllers/aplyCupan';
 
 const router = express.Router();
 
 router.post('/add',addCupan)
+router.get('/',getCupan)
 
 export const aplyCupanRoutes = router;

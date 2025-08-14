@@ -24,3 +24,24 @@ export const addCupan = async(req,res)=>{
         
     }
 }
+
+export const getCupan = async(req,res)=>{
+    reqInfo(req)
+    let {page,limit,search} = req.query,criteria:any = {isDeleted: false};
+    let option: any = {lean:true};
+
+    try{
+        if(search) {
+            criteria.name = {$regex:search,$options:'si'};
+        }
+        // options.sort ={}
+
+        let responce = await cupanCodeModel.find({isDeleted: false});
+        return res.status(200).json(new apiResponse(200,responseMessage?.getDataNotFound("Cupan"),responce,{}));
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(new apiResponse(500,responseMessage?.internalServerError,{},{}))
+        
+    }
+}

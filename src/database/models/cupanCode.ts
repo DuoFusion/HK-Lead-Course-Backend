@@ -5,7 +5,6 @@ const cupanCodeSchema = new mongoose.Schema({
     description:{type:String},
     discountType:{type:String,enum:['percentage','fixed'],required:true},
     discountValue:{type:Number,required:true},
-    minOrderAmount:{type:Number,default:0},
     maxDiscountAmount:{type:Number},
     usageLimit:{type:Number,default:1},
     usageCount:{type:Number,default:0},
