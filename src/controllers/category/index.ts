@@ -33,6 +33,14 @@ export const editCategory = async(req,res)=>{
     let { id } = req.body,
     body = req.body;
     try{
+        let isExist = await categoryModel.findOne({priority:body.priority,isDeleted:false})
+        if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}))
+
+        // if(body.parent){
+        //     const parent = await getFirstMatch(categoryModel,{_id:body.parent},{},{});
+        //     if(parent)body.level = parent.level+1;
+        // }
+
         const response = await updateData(categoryModel,{categoryId:id},body,{});
         if(!response)return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Category'),{},{}));
         return res.status(200).json(new apiResponse(500,responseMessage.updateDataSuccess('Category'),response,{}));
@@ -43,6 +51,21 @@ export const editCategory = async(req,res)=>{
         
     }
 }
+
+// export const updateLatestNews = async (req, res) => {
+//     reqInfo(req)
+//     let body = req.body
+//     try {
+//         let isExist = await latestNewsModel.findOne({ type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.id) } });
+//         if (isExist) return res.status(400).json(new apiResponse(400, responseMessage.dataAlreadyExist('priority'), {}, {}));
+//         const latestNews = await latestNewsModel.findOneAndUpdate({ _id: new ObjectId(body.id) }, body, { new: true })
+//         if (!latestNews) return res.status(404).json(new apiResponse(404, responseMessage.updateDataError('latestNews'), {}, {}));
+//         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('latestNews'), latestNews, {}));
+//     } catch (error) {
+//         console.log(error);
+//         return res.status(400).json(new apiResponse(400, responseMessage.internalServerError, {}, error));
+//     }
+// };
 
 export const deleteCategory = async (req, res) => {
     reqInfo(req)
