@@ -6,6 +6,8 @@ import { authRoutes } from './auth'
 import { uploadRoutes } from './upload'
 import { categoryRoutes } from './category'
 import { aplyCupanRoutes } from './aplyCupan'
+import { workshopRoutes } from './workshop'
+import { workshopRegisterRoutes } from './WorkshopRegister'
 // import { userRouter } from './user'
 
 
@@ -14,7 +16,8 @@ const router = Router()
 router.use('/auth', authRoutes)
 router.use('/category', categoryRoutes)
 // router.use('/category')
-
+router.use('/workshop',workshopRoutes)
+router.use('/WorkshopRegister',workshopRegisterRoutes)
 router.use('/aplyCupan',aplyCupanRoutes)
 router.use('/upload',uploadRoutes)
 export { router }
