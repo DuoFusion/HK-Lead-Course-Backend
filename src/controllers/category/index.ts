@@ -1,4 +1,4 @@
-import { error } from "node:console";
+
 import { apiResponse } from "../../common";
 import { categoryModel } from "../../database/models/category";
 import { reqInfo, responseMessage } from "../../helper"

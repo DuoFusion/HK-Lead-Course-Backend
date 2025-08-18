@@ -83,6 +83,7 @@ export const getworkshopRegister = async (req,res)=>{
     }
 }
 
+
 export const deleteworkshopRegister = async(req,res)=>{
     reqInfo(req)
     let { id } = req.params;

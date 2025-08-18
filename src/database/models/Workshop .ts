@@ -15,6 +15,7 @@ const workshopSchema = new mongoose.Schema({
   instructorImage: { type: String },
   instructorName: { type: String, required: true },
   thumbnailImage: { type: String, required: true },
+  workshopImage: { type: String, required: true },
   price: { type: String },
   category: { type: String },
   status: { type: String },

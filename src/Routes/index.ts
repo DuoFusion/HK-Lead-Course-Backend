@@ -8,6 +8,7 @@ import { categoryRoutes } from './category'
 import { aplyCupanRoutes } from './aplyCupan'
 import { workshopRoutes } from './workshop'
 import { workshopRegisterRoutes } from './WorkshopRegister'
+import { coursesRoutes } from './courses'
 // import { userRouter } from './user'
 
 
@@ -18,6 +19,7 @@ router.use('/category', categoryRoutes)
 // router.use('/category')
 router.use('/workshop',workshopRoutes)
 router.use('/WorkshopRegister',workshopRegisterRoutes)
+router.use('/Courses',coursesRoutes)
 router.use('/aplyCupan',aplyCupanRoutes)
 router.use('/upload',uploadRoutes)
 export { router }
