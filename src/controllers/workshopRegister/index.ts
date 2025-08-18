@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { workshopRegisterModel } from "../../database/models/workshopRegister";
 import { reqInfo, responseMessage } from "../../helper";
-import { countData, createData, getData, updateData } from "../../helper/database_service";
+import { countData, createData, deleteData, getData, updateData } from "../../helper/database_service";
 
 
 let ObjectId = require('mongoose').Types.ObjectId;
@@ -73,8 +73,23 @@ export const getworkshopRegister = async (req,res)=>{
         };
 
         return res.status(200).json(new apiResponse(200,responseMessage.getDataSuccess('Workshop Register'),{category_data:response,totalData:totalCount,state:stateObj},{}));
-        
 
+
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        
+    }
+}
+
+export const deleteworkshopRegister = async(req,res)=>{
+    reqInfo(req)
+    let { id } = req.params;
+    try{
+        const response = await deleteData(workshopRegisterModel,{_id:id});
+        if(!response) return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Workshop Register'),{},{}));
+        return res.status(200).json(new apiResponse(200,responseMessage.deleteDataSuccess('Workshop Register'),response,{}));
 
     }catch(error){
         console.log(error);
