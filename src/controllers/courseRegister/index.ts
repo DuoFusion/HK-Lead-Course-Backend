@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { courseRegisterModel } from "../../database/models/courseRegister";
 import { reqInfo, responseMessage } from "../../helper"
-import { createData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 const ObjectId = require('mongoose').Types.ObjectId
@@ -39,6 +39,56 @@ export const editcourseRegister = async(req,res)=>{
     }catch(error){
         console.log(error);
         return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        
+    }
+}
+
+export const getCourseRegister = async(req,res)=>{
+    reqInfo(req)
+    try{
+
+        let {search,page,limit} = req.query,options:any={lean:true},criteria:any={isDeleted:false};
+        if(search){
+            criteria.title = {$regex:search,$options:'si'};
+        }
+
+        const pageNum = parseInt(page)||1;
+        const limitNum = parseInt(limit)||0;
+
+        if(page && limit){
+            options.skip = (parseInt(page)-1)*parseInt(limit);
+            options.limit = parseInt(limit);
+        }
+
+        const response = await getData(courseRegisterModel,criteria,{},options);
+        const totalCount = await countData(courseRegisterModel,criteria);
+
+        const stateObj = {
+            page : pageNum,
+            limit: limitNum,
+            page_limit: Math.ceil(totalCount/limitNum)||1,
+        }
+
+        return res.status(200).json(new apiResponse(200,responseMessage.getDataSuccess('Course Register'),{courseRegister_data:response,totalData:totalCount,state:stateObj},{}));
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        
+    }
+}
+
+export const deleteCourseRegister = async(req,res)=>{
+    reqInfo(req)
+    try{
+        const  { id } = req.params;
+
+        const response = await updateData(courseRegisterModel,{_id:id},{isDeleted:true},{});
+        return res.status(200).json(new apiResponse(200,responseMessage.deleteDataSuccess('Course Register'),response,{}));
+
+    }catch(error){
+        console.log(error);
+
         
     }
 }
