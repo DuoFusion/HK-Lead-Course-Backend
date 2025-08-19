@@ -9,8 +9,8 @@ const userSchema: any = new mongoose.Schema({
     profilePhoto : {type : String},
     userType: { type: String, default: "user" },
    isActive: { type: Boolean, default: true },
-    isBlock: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
-}, { timestamps: true })
+}, { timestamps: true , versionKey: false })
 
 export const userModel = mongoose.model('user', userSchema);

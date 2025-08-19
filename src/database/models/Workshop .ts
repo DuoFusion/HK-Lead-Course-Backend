@@ -25,9 +25,9 @@ const workshopSchema = new mongoose.Schema({
     priority: { type: Number, default: 0 },
   features: { type: Boolean, default: false },
   isActive: { type: Boolean, default: true },
-  isBlock: { type: Boolean, default: false },
+  isBlocked: { type: Boolean, default: false },
   isDeleted: { type: Boolean, default: false },
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 
 // const workshopSchema = new mongoose.Schema({
 //     title: { type: String, required: true },

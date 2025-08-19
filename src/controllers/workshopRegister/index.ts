@@ -54,6 +54,7 @@ export const getworkshopRegister = async (req,res)=>{
         if(search){
             criteria.name = {$regex:search,$options:'si'};
         }
+      
 
         options.sort = {createdAt:-1};
 

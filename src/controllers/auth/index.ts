@@ -46,7 +46,7 @@ export const login = async (req, res) => {
         response = await userModel.findOne({ email: body?.email, isDeleted: false }).lean()
 
         if (!response) return res.status(404).json(new apiResponse(404, responseMessage?.invalidUserPasswordEmail, {}, {}))
-        if (response?.isBlock == true) return res.status(403).json(new apiResponse(403, responseMessage?.accountBlock, {}, {}))
+        if (response?.isBlocked == true) return res.status(403).json(new apiResponse(403, responseMessage?.accountBlock, {}, {}))
 
 
         const passwordMatch = await bcryptjs.compare(body.password, response.password)

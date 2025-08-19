@@ -18,9 +18,9 @@ const workshopRegisterSchema = new mongoose.Schema({
 
     // userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     isActive: { type: Boolean, default: true },
-    isBlock: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
-}, { timestamps: true })
+}, { timestamps: true ,versionKey: false })
 
 export const workshopRegisterModel = mongoose.model('workshop-register',workshopRegisterSchema);
 
