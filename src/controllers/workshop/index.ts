@@ -68,9 +68,15 @@ export const getWorkshop = async(req,res)=>{
 
     reqInfo(req)
     try{
-        let{search,page,limit}=req.query, options: any={lean:true},criteria:any={isDeleted:false};
+        let{search,page,limit,status}=req.query, options: any={lean:true},criteria:any={isDeleted:false};
         if(search) {
             criteria.title = {$regex:search,$options:'si'};
+        }
+
+        if(status === "blocked"){
+            criteria.isBlocked = true;
+        }else if(status === "unblocked"){
+            criteria.isBlocked = false;
         }
         
         const pageNum = parseInt(page)||1;
