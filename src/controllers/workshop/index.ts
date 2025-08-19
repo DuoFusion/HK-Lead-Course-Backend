@@ -73,7 +73,10 @@ export const getWorkshop = async (req, res) => {
             criteria.title = { $regex: search, $options: 'si' };
         }
 
-        (blockFilter === "true") ? criteria.isBlocked = true : criteria.isBlocked = false;
+        // (blockFilter === "true") ? criteria.isBlocked = true : criteria.isBlocked = false;
+        if(blockFilter)criteria.isBlocked = blockFilter;
+
+
 
         const pageNum = parseInt(page) || 1;
         const limitNum = parseInt(limit) || 0;
