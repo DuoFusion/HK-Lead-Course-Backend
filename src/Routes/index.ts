@@ -10,6 +10,7 @@ import { workshopRoutes } from './workshop'
 import { workshopRegisterRoutes } from './WorkshopRegister'
 import { coursesRoutes } from './courses'
 import { CourseRegisterRoutes } from './courseRegister'
+import { heroSectionRoutes } from './heroSection'
 // import { userRouter } from './user'
 
 
@@ -17,12 +18,11 @@ import { CourseRegisterRoutes } from './courseRegister'
 const router = Router()
 router.use('/auth', authRoutes)
 router.use('/category', categoryRoutes)
-// router.use('/category')
 router.use('/workshop',workshopRoutes)
 router.use('/workshopRegister',workshopRegisterRoutes)
 router.use('/courses',coursesRoutes)
 router.use('/courseRegister',CourseRegisterRoutes)
-// router.use('/heroSection',)
+router.use('/heroSection', heroSectionRoutes)
 router.use('/aplyCupan',aplyCupanRoutes)
 router.use('/upload',uploadRoutes)
 export { router }

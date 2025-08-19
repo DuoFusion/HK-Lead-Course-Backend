@@ -48,13 +48,14 @@ export const updateworkshopRegister = async(req,res)=>{
 
 export const getworkshopRegister = async (req,res)=>{
     reqInfo(req)
-    let {page,limit,search} = req.query,criteria:any={isDeleted:false};
+    let {page,limit,search,blockFilter} = req.query,criteria:any={isDeleted:false};
     let options:any = {lean:true};
     try{
         if(search){
             criteria.name = {$regex:search,$options:'si'};
         }
       
+        if(blockFilter)criteria.isBlocked = blockFilter;
 
         options.sort = {createdAt:-1};
 

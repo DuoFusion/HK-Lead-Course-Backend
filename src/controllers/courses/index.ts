@@ -63,11 +63,13 @@ export const getCourse = async(req,res)=>{
     reqInfo(req)
     try{
 
-        let {search,page,limit} = req.query,options:any={lean:true},criteria:any={isDeleted:false};
+        let {search,page,limit,blockFilter} = req.query,options:any={lean:true},criteria:any={isDeleted:false};
         if(search){
             criteria.title = {$regex:search,$options:'si'};
 
         }
+
+        if(blockFilter)criteria.isBlocked = blockFilter;
 
         const pageNum = parseInt(page)||1;
         const limitNum = parseInt(limit) || 0;

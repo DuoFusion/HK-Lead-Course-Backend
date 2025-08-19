@@ -76,8 +76,6 @@ export const getWorkshop = async (req, res) => {
         // (blockFilter === "true") ? criteria.isBlocked = true : criteria.isBlocked = false;
         if(blockFilter)criteria.isBlocked = blockFilter;
 
-
-
         const pageNum = parseInt(page) || 1;
         const limitNum = parseInt(limit) || 0;
 
