@@ -17,7 +17,7 @@ const workshopRegisterSchema = new mongoose.Schema({
     TransactionID: { type: String, required: true },
 
     // userId: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
-    isActive: { type: Boolean, default: true },
+    // isActive: { type: Boolean, default: true },
     isBlocked: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
 }, { timestamps: true ,versionKey: false })

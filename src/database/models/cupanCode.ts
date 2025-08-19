@@ -11,7 +11,7 @@ const cupanCodeSchema = new mongoose.Schema({
     userUsageLimit:{type:Number,default:1},
     validFrom:{type:Date},
     validTo:{type:Date},
-    isActive:{type:Boolean,default:true},
+    // isActive:{type:Boolean,default:true},
      isDeleted:{type:Boolean,default:false},
     isBlocked:{type:Boolean,default:false}
 },{timestamps:true,versionKey:false});

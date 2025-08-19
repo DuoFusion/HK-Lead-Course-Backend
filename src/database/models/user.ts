@@ -8,7 +8,7 @@ const userSchema: any = new mongoose.Schema({
     password: { type: String },
     profilePhoto : {type : String},
     userType: { type: String, default: "user" },
-   isActive: { type: Boolean, default: true },
+//    isActive: { type: Boolean, default: true },
     isBlocked: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
 }, { timestamps: true , versionKey: false })

@@ -24,7 +24,7 @@ const workshopSchema = new mongoose.Schema({
   faq: [faqSchema],   // 🔥 faq array of objects
     priority: { type: Number, default: 0 },
   features: { type: Boolean, default: false },
-  isActive: { type: Boolean, default: true },
+  // isActive: { type: Boolean, default: true },
   isBlocked: { type: Boolean, default: false },
   isDeleted: { type: Boolean, default: false },
 }, { timestamps: true, versionKey: false });

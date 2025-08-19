@@ -27,7 +27,7 @@ const courseSchema = new mongoose.Schema({
     testimonials:{type:String},
     faq: [faqSchema], 
     priority: { type: Number, default: 1 },
-    isActive: { type: Boolean, default: true },
+    // isActive: { type: Boolean, default: true },
     isBlocked: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },
 }, { timestamps: true, versionKey: false });
