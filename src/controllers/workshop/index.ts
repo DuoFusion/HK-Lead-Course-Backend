@@ -7,7 +7,6 @@ import { countData, createData, getData, updateData } from "../../helper/databas
 const ObjectId = require('mongoose').Types.ObjectId
 
 
-
 export const addWorkshop = async(req,res)=>{
 
     reqInfo(req)
@@ -17,10 +16,12 @@ export const addWorkshop = async(req,res)=>{
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}));
 
         const response = await createData(workshopModel,body);
+        console.log("response",response);
+        
         return res.status(200).json(new apiResponse(200,responseMessage.addDataSuccess('Workshop'),response,{}));
     }catch(error){
         console.log(error);
-        return res.status(200).json(new apiResponse(500,responseMessage.internalServerError,{},error));   
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));   
     }
 
 }
