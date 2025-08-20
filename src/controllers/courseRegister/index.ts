@@ -53,6 +53,9 @@ export const getCourseRegister = async(req,res)=>{
         }
 
         if(blockFilter)criteria.isBlocked = blockFilter;
+
+        options.sort = { priority: 1, createdAt: -1 };
+
         const pageNum = parseInt(page)||1;
         const limitNum = parseInt(limit)||0;
 
