@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+
 import { apiResponse } from "../../common";
 import { workshopModel } from "../../database/models/Workshop ";
 import { reqInfo, responseMessage } from "../../helper"

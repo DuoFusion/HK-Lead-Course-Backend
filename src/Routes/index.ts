@@ -1,6 +1,5 @@
 "use strict"
-import { Request, Router, Response } from 'express'
-// import { userRouter } from './user'
+import express from 'express';
 import { userStatus } from '../common'
 import { authRoutes } from './auth'
 import { uploadRoutes } from './upload'
@@ -13,11 +12,10 @@ import { CourseRegisterRoutes } from './courseRegister'
 import { heroSectionRoutes } from './heroSection'
 import { mentorsRoutes } from './mentors'
 import { languageRoutes } from './language'
-// import { userRouter } from './user'
 
 
 
-const router = Router()
+const router = express.Router()
 router.use('/auth', authRoutes)
 router.use('/category', categoryRoutes)
 router.use('/workshop', workshopRoutes)
