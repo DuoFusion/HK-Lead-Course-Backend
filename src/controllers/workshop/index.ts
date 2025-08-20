@@ -1,7 +1,8 @@
+import mongoose from "mongoose";
 import { apiResponse } from "../../common";
 import { workshopModel } from "../../database/models/Workshop ";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, getData, updateData } from "../../helper/database_service";
+import { countData, createData, findAllWithPopulate, getData, updateData } from "../../helper/database_service";
 
 
 const ObjectId = require('mongoose').Types.ObjectId
@@ -68,15 +69,19 @@ export const getWorkshop = async (req, res) => {
 
     reqInfo(req)
     try {
-        let { search, page, limit, blockFilter } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
+        let { search, page, limit, blockFilter, categoryFilter } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
         if (search) {
             criteria.title = { $regex: search, $options: 'si' };
         }
 
         // (blockFilter === "true") ? criteria.isBlocked = true : criteria.isBlocked = false;
-        if(blockFilter)criteria.isBlocked = blockFilter;
+        if (blockFilter) criteria.isBlocked = blockFilter;
+        console.log("categoryFilter => ", categoryFilter)
+        if (categoryFilter) {
+            criteria.category = new ObjectId(categoryFilter);
+        }
 
-          options.sort = { priority: 1, createdAt: -1 };
+        options.sort = { priority: 1, createdAt: -1 };
 
         const pageNum = parseInt(page) || 1;
         const limitNum = parseInt(limit) || 0;
@@ -86,7 +91,10 @@ export const getWorkshop = async (req, res) => {
             options.limit = parseInt(limit);
         }
 
-        const response = await getData(workshopModel, criteria, {}, options);
+        let populate = [
+            { path: 'category', select: 'name priority' }]
+        console.log("come to the response")
+        const response = await findAllWithPopulate(workshopModel, criteria, {}, options, populate);
         const totalCount = await countData(workshopModel, criteria);
 
         const stateObj = {

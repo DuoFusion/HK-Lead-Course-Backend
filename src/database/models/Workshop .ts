@@ -1,4 +1,5 @@
 
+
 var mongoose = require('mongoose');
 const faqSchema = new mongoose.Schema({
   question: { type: String, required: true },
@@ -16,12 +17,14 @@ const workshopSchema = new mongoose.Schema({
   thumbnailImage: { type: String, required: true },
   workshopImage: { type: String, required: true },
   price: { type: String },
-  category: { type:mongoose.Schema.Types.ObjectId,ref:'category' },
-  status: { type: String , enum:['pending','completed'] },
+
+  category: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
+
+  status: { type: String, enum: ['pending', 'completed'] },
   fullDescription: { type: String },
   syllabus: { type: String },
   faq: [faqSchema],   // 🔥 faq array of objects
-    priority: { type: Number, default: 0 },
+  priority: { type: Number, default: 0 },
   features: { type: Boolean, default: false },
   // isActive: { type: Boolean, default: true },
   isBlocked: { type: Boolean, default: false },

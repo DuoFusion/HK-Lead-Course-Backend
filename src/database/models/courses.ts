@@ -27,7 +27,7 @@ const courseSchema = new mongoose.Schema({
   instructorName: { type: String },
   instructorImage: { type: String },
   courseImage: { type: String },
-  courseLanguage: { type: String },
+  courseLanguage: { type: String ,enum:['English','Hindi','Gujarati']},
   mrp: { type: String },
   discount: { type: String, enum: ['percentage', 'fixed'] },
   listOfLectureTitle: { type: String },

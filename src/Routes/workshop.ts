@@ -7,10 +7,10 @@ const router = express.Router();
 
 
 router.use(adminJWT)
-router.post('/add',addWorkshop)
-router.post('/edit',updateWorkshop)
-router.get('/',getWorkshop)
-router.delete('/delete/:id',deleteWorkshop)
+router.post('/add', addWorkshop)
+router.post('/edit', updateWorkshop)
+router.get('/', getWorkshop)
+router.delete('/delete/:id', deleteWorkshop)
 
 
 export const workshopRoutes = router;
