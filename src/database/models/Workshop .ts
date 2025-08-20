@@ -16,8 +16,8 @@ const workshopSchema = new mongoose.Schema({
   thumbnailImage: { type: String, required: true },
   workshopImage: { type: String, required: true },
   price: { type: String },
-  category: { type: String },
-  status: { type: String },
+  category: { type:mongoose.Schema.Types.ObjectId,ref:'category' },
+  status: { type: String , enum:['pending','completed'] },
   fullDescription: { type: String },
   syllabus: { type: String },
   faq: [faqSchema],   // 🔥 faq array of objects
