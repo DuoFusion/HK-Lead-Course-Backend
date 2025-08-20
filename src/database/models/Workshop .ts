@@ -22,7 +22,7 @@ const workshopSchema = new mongoose.Schema({
   syllabus: { type: String },
   faq: [faqSchema],   // 🔥 faq array of objects
     priority: { type: Number, default: 0 },
-  // features: { type: Boolean, default: false },
+  features: { type: Boolean, default: false },
   // isActive: { type: Boolean, default: true },
   isBlocked: { type: Boolean, default: false },
   isDeleted: { type: Boolean, default: false },
