@@ -76,6 +76,8 @@ export const getWorkshop = async (req, res) => {
         // (blockFilter === "true") ? criteria.isBlocked = true : criteria.isBlocked = false;
         if(blockFilter)criteria.isBlocked = blockFilter;
 
+          options.sort = { priority: -1, createdAt: -1 };
+
         const pageNum = parseInt(page) || 1;
         const limitNum = parseInt(limit) || 0;
 
