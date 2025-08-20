@@ -20,7 +20,7 @@ const workshopSchema = new mongoose.Schema({
 
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
 
-  status: { type: String, enum: ['pending', 'completed'] },
+  status: { type: String, enum: ['pending', 'completed','cancelled'] },
   fullDescription: { type: String },
   syllabus: { type: String },
   faq: [faqSchema],   // 🔥 faq array of objects

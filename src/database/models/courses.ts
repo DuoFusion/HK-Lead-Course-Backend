@@ -1,3 +1,5 @@
+import { COURSE_DISCOUNT } from "../../common";
+
 var mongoose = require('mongoose')
 
 const faqSchema = new mongoose.Schema({
@@ -8,8 +10,8 @@ const faqSchema = new mongoose.Schema({
 const testimonialSchema = new mongoose.Schema({
   image: { type: String },
   name: { type: String },
-  role: { type: String},
-  message: { type: String}
+  role: { type: String },
+  message: { type: String }
 }, { _id: false });
 
 const courseSchema = new mongoose.Schema({
@@ -27,12 +29,18 @@ const courseSchema = new mongoose.Schema({
   instructorName: { type: String },
   instructorImage: { type: String },
   courseImage: { type: String },
-  courseLanguage: { type: String ,enum:['English','Hindi','Gujarati']},
+  courseLanguage: { type: String, enum: ['English', 'Hindi', 'Gujarati'] },
   mrp: { type: String },
-  discount: { type: String, enum: ['percentage', 'fixed'] },
-  listOfLectureTitle: { type: String },
-  listOfLectureDescription: { type: String },
-   testimonials: [testimonialSchema],
+  discount: { type: String, enum: Object.values(COURSE_DISCOUNT), default: COURSE_DISCOUNT.PERCENTAGE },
+  listOfLecture: [
+    {
+      title: { type: String },
+      description: { type: String },
+      _id: false
+    }
+  ],
+  // listOfLectureDescription: { type: String },
+  testimonials: [testimonialSchema],
   faq: [faqSchema],
   priority: { type: Number, default: 1 },
   // isActive: { type: Boolean, default: true },

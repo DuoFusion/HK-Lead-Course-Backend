@@ -17,3 +17,8 @@ export const userStatus = {
     admin: "admin",
     upload: "upload"
 }
+
+export const COURSE_DISCOUNT = {
+    PERCENTAGE: "percentage",
+    FIXED: "fixed"
+}

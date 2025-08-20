@@ -2,7 +2,7 @@
 import { apiResponse } from "../../common";
 import { categoryModel } from "../../database/models/category";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, deleteData, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, deleteData, getData, updateData } from "../../helper/database_service";
 
 const ObjeactId = require('mongoose').Types.ObjeactId;
 
@@ -10,7 +10,7 @@ export const createCategory = async(req,res)=>{
     reqInfo(req)
     try{
         const body = req.body;
-        let isExist = await categoryModel.findOne({type:body.type,priority:body.priority,isDeleted:false})
+        let isExist = await categoryModel.findOne({ type:body.type,priority:body.priority,isDeleted:false})
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}))
             // if(body.parent){
             //     const parent = await getFirstMatch(categoryModel,{_id:body.parent},{},{});
@@ -22,10 +22,8 @@ export const createCategory = async(req,res)=>{
 
     }catch(error){
         console.log(error);
-        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
-        
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));   
     }
-
 }
 
 export const editCategory = async(req,res)=>{
@@ -36,15 +34,13 @@ export const editCategory = async(req,res)=>{
         let isExist = await categoryModel.findOne({type:body.type,priority:body.priority,isDeleted:false,_id: { $ne: (categoryId)}});
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}))
 
-
-        const response = await updateData(categoryModel,{_id:categoryId, isDeleted:false},body,{new:true});
+        const response = await updateData(categoryModel,{_id:new ObjeactId(categoryId), isDeleted:false},body,{new:true});
         if(!response)return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Category'),{},{}));
         return res.status(200).json(new apiResponse(500,responseMessage.updateDataSuccess('Category'),response,{}));
 
     }catch(error){
         console.log(error);
         return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
-        
     }
 }
 
@@ -68,7 +64,7 @@ export const deleteCategory = async (req, res) => {
     let  {id } = req.params;
     
     try {
-        const response = await deleteData(categoryModel, { _id:id });
+        const response = await deleteData(categoryModel, { _id:new ObjeactId(id), isDeleted: false });
         console.log("response", response);
         // console.log("id",{_id:new ObjeactId(id)});
         
@@ -83,9 +79,7 @@ export const deleteCategory = async (req, res) => {
 export const getCategories = async (req, res) => {
     reqInfo(req);
 
-    let { page, limit, search } = req.query;
-    let criteria : any= { isDeleted: false };
-    let options:any = { lean: true, sort: { createdAt: -1 } }; // default sort
+    let { page, limit, search } = req.query, criteria : any= { isDeleted: false }, options:any = { lean: true, sort: { createdAt: -1 } }; // default sort
 
     try {
         // Search filter
