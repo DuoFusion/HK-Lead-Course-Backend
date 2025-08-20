@@ -1,6 +1,6 @@
 import express from 'express';
 import { adminJWT } from '../helper';
-import { addHeroSection, editHeroSection } from '../controllers/heroSection';
+import { addHeroSection, deleteHeroSection, editHeroSection, getHeroSection } from '../controllers/heroSection';
 
 const router = express.Router();
 
@@ -8,6 +8,8 @@ const router = express.Router();
 router.use(adminJWT)
 router.post('/add',addHeroSection)
 router.post('/edit',editHeroSection)
+router.get('/',getHeroSection)
+router.delete('/delete/:id',deleteHeroSection)
 
 
 

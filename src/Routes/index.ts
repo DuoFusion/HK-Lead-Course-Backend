@@ -11,6 +11,7 @@ import { workshopRegisterRoutes } from './WorkshopRegister'
 import { coursesRoutes } from './courses'
 import { CourseRegisterRoutes } from './courseRegister'
 import { heroSectionRoutes } from './heroSection'
+import { mentorsRoutes } from './mentors'
 // import { userRouter } from './user'
 
 
@@ -23,6 +24,7 @@ router.use('/workshopRegister',workshopRegisterRoutes)
 router.use('/courses',coursesRoutes)
 router.use('/courseRegister',CourseRegisterRoutes)
 router.use('/heroSection', heroSectionRoutes)
+router.use('/Mentors',mentorsRoutes)
 router.use('/aplyCupan',aplyCupanRoutes)
 router.use('/upload',uploadRoutes)
 export { router }

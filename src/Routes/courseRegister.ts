@@ -5,8 +5,9 @@ import { addCourseRegister, deleteCourseRegister, editcourseRegister, getCourseR
 
 const router = express.Router()
 
-router.use(adminJWT)
 router.post('/add',addCourseRegister)
+
+router.use(adminJWT)
 router.post('/edit' ,editcourseRegister)
 router.get('/',getCourseRegister)
 router.delete('/delete/:id',deleteCourseRegister)

@@ -5,9 +5,16 @@ const faqSchema = new mongoose.Schema({
   answer: { type: String, required: true }
 }, { _id: false });
 
+const testimonialSchema = new mongoose.Schema({
+  image: { type: String, required: true },
+  name: { type: String, required: true },
+  role: { type: String, required: true },
+  message: { type: String, required: true }
+}, { _id: false });
+
 const courseSchema = new mongoose.Schema({
   title: { type: String, required: true },
-  Subtitle: { type: String, required: true },
+  subtitle: { type: String, required: true },
   background: { type: String, required: true },
   shortDescription: { type: String, required: true },
   duration: { type: String, required: true },
@@ -15,7 +22,7 @@ const courseSchema = new mongoose.Schema({
   price: { type: String, required: true },
   totalLectures: { type: String, required: true },
   totalHours: { type: String, required: true },
-  rating: { type: String, required: true },
+  rating: { type: Number, required: true },
   whatYouLearn: { type: String },
   instructorName: { type: String },
   instructorImage: { type: String },
@@ -23,9 +30,9 @@ const courseSchema = new mongoose.Schema({
   courseLanguage: { type: String },
   mrp: { type: String },
   discount: { type: String, enum: ['percentage', 'fixed'] },
-  listofLectureTitle: { type: Array },
-  ListofLectureDescription: { type: Array },
-  testimonials: [{ type: String }],
+  listOfLectureTitle: { type: String },
+  listOfLectureDescription: { type: String },
+   testimonials: [testimonialSchema],
   faq: [faqSchema],
   priority: { type: Number, default: 1 },
   // isActive: { type: Boolean, default: true },

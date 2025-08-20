@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { heroSectionModel } from "../../database/models/heroSection";
 import { reqInfo, responseMessage } from "../../helper"
-import { createData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 const ObjectId = require('mongoose').Types.ObjectId
@@ -39,6 +39,60 @@ export const editHeroSection = async(req,res)=>{
 
     
     
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        
+    }
+}
+
+export const getHeroSection = async(req,res)=>{
+    reqInfo(req)
+    try{
+
+        let {search,page,limit} =  req.query,options:any={lean:true},criteria:any={isDeleted:false};
+        if(search){
+            criteria.title = {$regex:search,$options:'si'};
+        }
+
+        options.sort = { priority: 1, createdAt: -1 };
+
+        const pageNum = parseInt(page)||1;
+        const limitNum = parseInt(limit)||0;
+
+        if(page && limit){
+            options.skip = (parseInt(page)-1)*parseInt(limit);
+            options.limit = parseInt(limit);
+        }
+
+        const response = await getData(heroSectionModel,criteria,{},options);
+        const totalCount = await countData(heroSectionModel,criteria);
+
+        const stateObj = {
+            page: pageNum,
+            limit:limitNum,
+            page_limit:Math.ceil(totalCount/limitNum)||1,
+        }
+
+        return res.status(200).json(new apiResponse(200,responseMessage.getDataSuccess('Hero Section'),{heroSection_data:response,totalData:totalCount,state:stateObj},{}));
+
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error))
+        
+    }
+}
+
+
+export const deleteHeroSection = async(req,res)=>{
+    reqInfo(req)
+    try{
+        const {id} = req.params;
+
+        const response = await updateData(heroSectionModel,{_id:id},{isDeleted:true},{});
+        return res.status(200).json(new apiResponse(200,responseMessage.deleteDataSuccess('Hero Section'),response,{}))
+
     }catch(error){
         console.log(error);
         return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
