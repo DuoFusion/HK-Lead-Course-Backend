@@ -103,17 +103,17 @@ export const course_testimonial_add = async (req, res) => {
     reqInfo(req)
     let body = req.body
     try {
-        console.log("body", body);
+        // console.log("body", body);
         
         let course = await getFirstMatch(courseModel, { _id: new ObjectId(body.courseId) }, {}, { lean: true });
-        console.log("course", course);
+        // console.log("course", course);
         
         if (!course) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Course'), {}, {}));
         // console.log("course", course);
         
 
         let response = await updateData(courseModel, { _id: new ObjectId(body.courseId) }, { $push: { testimonials: body.testimonial } }, { new: true });
-        console.log("response", response);
+        // console.log("response", response);
         
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Course'), response, {}));
     } catch (error) {

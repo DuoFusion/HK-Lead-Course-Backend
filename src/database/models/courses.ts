@@ -6,10 +6,10 @@ const faqSchema = new mongoose.Schema({
 }, { _id: false });
 
 const testimonialSchema = new mongoose.Schema({
-  image: { type: String, required: true },
-  name: { type: String, required: true },
-  role: { type: String, required: true },
-  message: { type: String, required: true }
+  image: { type: String },
+  name: { type: String },
+  role: { type: String},
+  message: { type: String}
 }, { _id: false });
 
 const courseSchema = new mongoose.Schema({
