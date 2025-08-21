@@ -16,7 +16,7 @@ const workshopSchema = new mongoose.Schema({
   instructorName: { type: String, required: true },
   thumbnailImage: { type: String, required: true },
   workshopImage: { type: String, required: true },
-  price: { type: String },
+  price: { type: Number },
 
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
 
