@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { courseModel } from "../../database/models/courses";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, deleteData, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, deleteData, findAllWithPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 const ObjectId = require("mongoose").Types.ObjectId
 
@@ -80,8 +80,11 @@ export const getCourse = async (req, res) => {
             options.skip = (parseInt(page) - 1) * parseInt(limit);
             options.limit = parseInt(limit);
         }
+        let populate =[{
+            path:'courseLanguage',select:'name priority'
+        }]
 
-        const response = await getData(courseModel, criteria, {}, options);
+        const response = await findAllWithPopulate(courseModel, criteria, {}, options,populate);
         const totalCount = await countData(courseModel, criteria);
 
         const stateObj = {

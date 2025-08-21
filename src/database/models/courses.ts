@@ -30,7 +30,8 @@ const courseSchema = new mongoose.Schema({
   instructorName: { type: String },
   instructorImage: { type: String },
   courseImage: { type: String },
-  courseLanguage: { type: String, enum: ['English', 'Hindi', 'Gujarati'] },
+  courseLanguage:{type:mongoose.Schema.Types.ObjectId,ref:'language'},
+  // courseLanguage: { type: String, enum: ['English', 'Hindi', 'Gujarati'] },
   mrp: { type: String },
   discount: { type: String, enum: Object.values(COURSE_DISCOUNT), default: COURSE_DISCOUNT.PERCENTAGE },
   listOfLecture: [

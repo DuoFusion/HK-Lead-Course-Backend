@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { languageModel } from "../../database/models/language";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, deleteData, findAllWithPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, deleteData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 
@@ -62,10 +62,8 @@ export const getLanguage = async(req,res)=>{
         options.skip = (parseInt(page)-1)*parseInt(limit);
         options.limit = parseInt(limit);
        }
-let populate =[{
-    path:'language',select:'name priority'
-}]
-       const responce = await findAllWithPopulate(languageModel,criteria,{},options,populate);
+
+       const responce = await getData(languageModel,criteria,{},options);
        const totalCount = await countData(languageModel,criteria);
 
        const stateObj = {
