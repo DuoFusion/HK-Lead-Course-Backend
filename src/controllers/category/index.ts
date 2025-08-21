@@ -79,13 +79,15 @@ export const deleteCategory = async (req, res) => {
 export const getCategories = async (req, res) => {
     reqInfo(req);
 
-    let { page, limit, search } = req.query, criteria : any= { isDeleted: false }, options:any = { lean: true, sort: { createdAt: -1 } }; // default sort
-
+    
     try {
+        let { page, limit, search } = req.query, criteria : any= { isDeleted: false }, options:any = { lean: true, sort: { createdAt: -1 } }; // default sort
         // Search filter
         if (search) {
             criteria.name = { $regex: search, $options: 'i' };
         }
+
+        options.sort = {priority:1,createdAt:-1};
 
         // Pagination
         if (page && limit) {

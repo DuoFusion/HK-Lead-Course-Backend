@@ -82,12 +82,15 @@ export const getCourse = async (req, res) => {
         }
         let populate =[{
             path:'courseLanguage',select:'name priority',
-        },{
-            path:'SkillLevel' , select:'name priority'
+        }
+        ,{
+            path:'skillLevel' , select:'title priority'
 
-        },{
+        }
+        ,{
             path:'whatYouLearn',select:'title priority'
-        }]
+        }
+    ]
         
 
         const response = await findAllWithPopulate(courseModel, criteria, {}, options,populate);

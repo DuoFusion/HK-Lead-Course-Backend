@@ -21,7 +21,7 @@ const courseSchema = new mongoose.Schema({
   background: { type: String, required: true },
   shortDescription: { type: String, required: true },
   duration: { type: String, required: true },
-  skillLevel: { type: mongoose.Schema.Types.ObjectId, ref: 'SkillLevel' },
+  skillLevel: { type: mongoose.Schema.Types.ObjectId, ref: 'skillLevel' },
   price: { type: Number, required: true },
   totalLectures: { type: Number, required: true },
   totalHours: { type: String, required: true },
