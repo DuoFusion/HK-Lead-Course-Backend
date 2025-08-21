@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { languageModel } from "../../database/models/language";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, deleteData, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 

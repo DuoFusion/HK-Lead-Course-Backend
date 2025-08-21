@@ -81,8 +81,14 @@ export const getCourse = async (req, res) => {
             options.limit = parseInt(limit);
         }
         let populate =[{
-            path:'courseLanguage',select:'name priority'
+            path:'courseLanguage',select:'name priority',
+        },{
+            path:'SkillLevel' , select:'name priority'
+
+        },{
+            path:'whatYouLearn',select:'title priority'
         }]
+        
 
         const response = await findAllWithPopulate(courseModel, criteria, {}, options,populate);
         const totalCount = await countData(courseModel, criteria);

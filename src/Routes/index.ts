@@ -12,6 +12,8 @@ import { CourseRegisterRoutes } from './courseRegister'
 import { heroSectionRoutes } from './heroSection'
 import { mentorsRoutes } from './mentors'
 import { languageRoutes } from './language'
+import { skillLevelRoutes } from './skillLevel';
+import { whatYouLearnRoutes } from './whatYouLearn';
 
 
 
@@ -27,4 +29,6 @@ router.use('/Mentors', mentorsRoutes)
 router.use('/aplyCupan', aplyCupanRoutes)
 router.use('/upload', uploadRoutes)
 router.use('/language',languageRoutes)
+router.use('/skillLevel',skillLevelRoutes)
+router.use('/whatYouLearn',whatYouLearnRoutes)
 export { router }
