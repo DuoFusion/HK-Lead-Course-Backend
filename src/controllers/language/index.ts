@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { languageModel } from "../../database/models/language";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, deleteData, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, deleteData, findAllWithPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 
@@ -62,8 +62,10 @@ export const getLanguage = async(req,res)=>{
         options.skip = (parseInt(page)-1)*parseInt(limit);
         options.limit = parseInt(limit);
        }
-
-       const responce = await getData(languageModel,criteria,{},options);
+let populate =[{
+    path:'language',select:'name priority'
+}]
+       const responce = await findAllWithPopulate(languageModel,criteria,{},options,populate);
        const totalCount = await countData(languageModel,criteria);
 
        const stateObj = {
@@ -83,16 +85,10 @@ export const getLanguage = async(req,res)=>{
 export const deleteLanguage = async(req,res)=>{
     reqInfo(req)
     try{
-        let {id} = req.query;
-        const response = await deleteData(languageModel,{_id:id});
-        console.log("response",response);
+        let response = await updateData(languageModel, { _id: new ObjectId(req.params.id), isDeleted: false }, { isDeleted: true }, { new: true });
+        if (!response) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Language'), {}, {}));
+        return res.status(200).json(new apiResponse(200, responseMessage.deleteDataSuccess('Language'), response, {}));
         
-        if(response) return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Language'),{},{}));
-        return res.status(200).json(new apiResponse(200,responseMessage.deleteDataSuccess('Language'),{},{}));
-
-        
-
-
     }catch(error){
         console.log(error);
         return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
