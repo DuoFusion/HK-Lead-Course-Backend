@@ -11,7 +11,8 @@ const testimonialSchema = new mongoose.Schema({
   image: { type: String },
   name: { type: String },
   role: { type: String },
-  message: { type: String }
+  message: { type: String },
+  rating: { type: Number }
 }, { _id: false });
 
 const courseSchema = new mongoose.Schema({
@@ -39,7 +40,6 @@ const courseSchema = new mongoose.Schema({
       _id: false
     }
   ],
-  // listOfLectureDescription: { type: String },
   testimonials: [testimonialSchema],
   faq: [faqSchema],
   priority: { type: Number, default: 1 },
