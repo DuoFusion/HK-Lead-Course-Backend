@@ -4,7 +4,7 @@ import { categoryModel } from "../../database/models/category";
 import { reqInfo, responseMessage } from "../../helper"
 import { countData, createData, deleteData, getData, updateData } from "../../helper/database_service";
 
-const ObjeactId = require('mongoose').Types.ObjeactId;
+const ObjectId = require('mongoose').Types.ObjectId;
 
 export const createCategory = async(req,res)=>{
     reqInfo(req)
@@ -34,7 +34,7 @@ export const editCategory = async(req,res)=>{
         let isExist = await categoryModel.findOne({type:body.type,priority:body.priority,isDeleted:false,_id: { $ne: (categoryId)}});
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist("priority"),{},{}))
 
-        const response = await updateData(categoryModel,{_id:new ObjeactId(categoryId), isDeleted:false},body,{new:true});
+        const response = await updateData(categoryModel,{_id:new ObjectId(categoryId), isDeleted:false},body,{new:true});
         if(!response)return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Category'),{},{}));
         return res.status(200).json(new apiResponse(500,responseMessage.updateDataSuccess('Category'),response,{}));
 
@@ -64,7 +64,7 @@ export const deleteCategory = async (req, res) => {
     let  {id } = req.params;
     
     try {
-        const response = await deleteData(categoryModel, { _id:new ObjeactId(id), isDeleted: false });
+        const response = await deleteData(categoryModel, { _id:new ObjectId(id), isDeleted: false });
         console.log("response", response);
         // console.log("id",{_id:new ObjeactId(id)});
         

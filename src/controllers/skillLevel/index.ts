@@ -34,10 +34,10 @@ export const editSkillLevel = async(req,res)=>{
         
         let isExist = await getFirstMatch(skillLevelModel,{priority:body.priority,_id:{$ne:new ObjectId(body.skillLevelId)}},{},{lean:true});
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist('Priority'),{},{}));
-        console.log(`isExist`,isExist);
+     
         
         const response = await updateData(skillLevelModel,{_id:new ObjectId(body.skillLevelId),isDeleted:false},body,{new:true});
-        console.log("response",response);
+        // console.log("response",response);
           
         if(!response) return res.status(404).json(new apiResponse(404,responseMessage?.getDataNotFound('Skill Level'),{},{}))
 

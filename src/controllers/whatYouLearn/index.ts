@@ -30,21 +30,26 @@ export const editWhatYouLearn = async(req,res)=>{
     reqInfo(req)
     try{
         const body = req.body;
-
+        console.log("body",body.priority);
+        
         let isExist = await getFirstMatch(whatYouLearnModel,{priority:body.priority,_id:{$ne:new ObjectId(body.whatYouLearnId)}},{},{lean:true});
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist('Priority'),{},{}));
-
+     
+        
         const response = await updateData(whatYouLearnModel,{_id:new ObjectId(body.whatYouLearnId),isDeleted:false},body,{new:true});
-        return res.status(200).json(new apiResponse(200,responseMessage?.updateDataSuccess('What You Learn'),response,{}));
+        // console.log("response",response);
+          
+        if(!response) return res.status(404).json(new apiResponse(404,responseMessage?.getDataNotFound('What You Learn'),{},{}))
+
+            return res.status(200).json(new apiResponse(200,responseMessage?.updateDataSuccess('Skill Level'),response,{}))
 
     }catch(error){
         console.log(error);
-        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        return res.status(500).json(new apiResponse(500,responseMessage?.internalServerError,{},error))
         
     }
-    
-}
 
+}
 
 export const getWhatYouLearn = async(req,res)=>{
     reqInfo(req)
