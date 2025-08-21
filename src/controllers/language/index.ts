@@ -33,11 +33,10 @@ export const editLanguage = async (req, res) => {
         const body = req.body;
         console.log("body", body);
 
-        let isExist = await getFirstMatch(languageModel, { priority: body.priority, _id: { $ne: new ObjectId(body.languageId) } }, {}, { lean: true });
-        if (!isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
+        let isExist = await languageModel.findOne({ type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.languageId) } });
+        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
 
-        const response = await updateData(languageModel, { _id: new ObjectId(body.languageId), isDeleted: false }, body, { new: true });
-        if (!response) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Category'), {}, {}));
+        const response = await updateData(languageModel, { _id: new ObjectId(body.languageId) }, body, {});
 
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Language'), response, {}));
 
@@ -48,48 +47,48 @@ export const editLanguage = async (req, res) => {
     }
 }
 
-export const getLanguage = async(req,res)=>{
+export const getLanguage = async (req, res) => {
     reqInfo(req)
-    try{
-       let {search , page , limit} =req.query,options:any = {lean:true},criteria:any = {isDeleted:false};
-       if(search) {
-        criteria.title = { $regex: search, $options: 'si'};
-       } 
+    try {
+        let { search, page, limit } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
+        if (search) {
+            criteria.title = { $regex: search, $options: 'si' };
+        }
 
-       options.sort = { priority: 1, createdAt: -1 };
+        options.sort = { priority: 1, createdAt: -1 };
 
-       if(page && limit){
-        options.skip = (parseInt(page)-1)*parseInt(limit);
-        options.limit = parseInt(limit);
-       }
+        if (page && limit) {
+            options.skip = (parseInt(page) - 1) * parseInt(limit);
+            options.limit = parseInt(limit);
+        }
 
-       const responce = await getData(languageModel,criteria,{},options);
-       const totalCount = await countData(languageModel,criteria);
+        const responce = await getData(languageModel, criteria, {}, options);
+        const totalCount = await countData(languageModel, criteria);
 
-       const stateObj = {
-           page : parseInt(page)||1,
-           limit: parseInt(limit)||totalCount,
-           page_limit: Math.ceil(totalCount/(parseInt(limit)|| totalCount))||1,
+        const stateObj = {
+            page: parseInt(page) || 1,
+            limit: parseInt(limit) || totalCount,
+            page_limit: Math.ceil(totalCount / (parseInt(limit) || totalCount)) || 1,
 
-       };
-       return res.status(200).json(new apiResponse(200,responseMessage?.getDataSuccess('Language'),{language_data:responce,totalData:totalCount,state:stateObj},{}));
+        };
+        return res.status(200).json(new apiResponse(200, responseMessage?.getDataSuccess('Language'), { language_data: responce, totalData: totalCount, state: stateObj }, {}));
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error)) 
+        return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error))
     }
 }
 
-export const deleteLanguage = async(req,res)=>{
+export const deleteLanguage = async (req, res) => {
     reqInfo(req)
-    try{
+    try {
         let response = await updateData(languageModel, { _id: new ObjectId(req.params.id), isDeleted: false }, { isDeleted: true }, { new: true });
         if (!response) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Language'), {}, {}));
         return res.status(200).json(new apiResponse(200, responseMessage.deleteDataSuccess('Language'), response, {}));
-        
-    }catch(error){
+
+    } catch (error) {
         console.log(error);
-        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
-        
+        return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error));
+
     }
 }
