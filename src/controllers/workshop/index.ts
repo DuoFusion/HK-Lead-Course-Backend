@@ -92,7 +92,7 @@ export const getWorkshop = async (req, res) => {
         }
 
         let populate = [
-            { path: 'category', select: 'name priority' }]
+            { path: 'categoryId', select: 'name priority' }]
         console.log("come to the response")
         const response = await findAllWithPopulate(workshopModel, criteria, {}, options, populate);
         const totalCount = await countData(workshopModel, criteria);

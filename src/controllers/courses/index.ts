@@ -81,14 +81,14 @@ export const getCourse = async (req, res) => {
             options.limit = parseInt(limit);
         }
         let populate =[{
-            path:'courseLanguage',select:'name priority',
+            path:'courseLanguageId',select:'name priority',
         }
         ,{
-            path:'skillLevel' , select:'title priority'
+            path:'skillLevelId' , select:'title priority'
 
         }
         ,{
-            path:'whatYouLearn',select:'title priority'
+            path:'whatYouLearnId',select:'title priority'
         }
     ]
         

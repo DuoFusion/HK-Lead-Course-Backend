@@ -18,7 +18,7 @@ const workshopSchema = new mongoose.Schema({
   workshopImage: { type: String, required: true },
   price: { type: Number },
 
-  category: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
+  categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
 
   status: { type: String, enum: ['pending', 'completed','cancelled'] },
   fullDescription: { type: String },
