@@ -22,8 +22,8 @@ const courseSchema = new mongoose.Schema({
   shortDescription: { type: String, required: true },
   duration: { type: String, required: true },
   skillLevel: { type: String, required: true },
-  price: { type: String, required: true },
-  totalLectures: { type: String, required: true },
+  price: { type: Number, required: true },
+  totalLectures: { type: Number, required: true },
   totalHours: { type: String, required: true },
   rating: { type: Number, required: true },
   whatYouLearn: { type: String },
@@ -32,7 +32,7 @@ const courseSchema = new mongoose.Schema({
   courseImage: { type: String },
   courseLanguage:{type:mongoose.Schema.Types.ObjectId,ref:'language'},
   // courseLanguage: { type: String, enum: ['English', 'Hindi', 'Gujarati'] },
-  mrp: { type: String },
+  mrp: { type: Number },
   discount: { type: String, enum: Object.values(COURSE_DISCOUNT), default: COURSE_DISCOUNT.PERCENTAGE },
   listOfLecture: [
     {
