@@ -1,5 +1,5 @@
 import { apiResponse } from "../../common";
-import { heroSectionModel } from "../../database/models/heroSection";
+import { bannnerModel } from "../../database/models/heroSection";
 import { reqInfo, responseMessage } from "../../helper"
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
@@ -10,10 +10,10 @@ export const addHeroSection = async (req, res) => {
     try {
 
         const body = req.body;
-        let isExist = await getFirstMatch(heroSectionModel, { priority: body.priority }, {}, { lean: true });
+        let isExist = await getFirstMatch(bannnerModel, { priority: body.priority }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
 
-        let response = await createData(heroSectionModel, body);
+        let response = await createData(bannnerModel, body);
         return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Hero Section'), response, {}));
 
     } catch (error) {
@@ -28,13 +28,13 @@ export const editHeroSection = async (req, res) => {
     try {
         const body = req.body;
 
-        let isExist = await getFirstMatch(heroSectionModel, { _id: new ObjectId(body.heroSectionId) }, {}, { lean: true });
+        let isExist = await getFirstMatch(bannnerModel, { _id: new ObjectId(body.heroSectionId) }, {}, { lean: true });
         if (!isExist) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Hero Section'), {}, {}));
 
-        isExist = await getFirstMatch(heroSectionModel, { priority: body.priority, _id: { $ne: new ObjectId(body.heroSectionId) } }, {}, { lean: true });
+        isExist = await getFirstMatch(bannnerModel, { priority: body.priority, _id: { $ne: new ObjectId(body.heroSectionId) } }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
 
-        const response = await updateData(heroSectionModel, { _id: new ObjectId(body.heroSectionId) }, body, {});
+        const response = await updateData(bannnerModel, { _id: new ObjectId(body.heroSectionId) }, body, {});
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Hero Section'), response, {}));
 
     } catch (error) {
@@ -60,8 +60,8 @@ export const getHeroSection = async (req, res) => {
             options.limit = parseInt(limit);
         }
 
-        const response = await getData(heroSectionModel, criteria, {}, options);
-        const totalCount = await countData(heroSectionModel, criteria);
+        const response = await getData(bannnerModel, criteria, {}, options);
+        const totalCount = await countData(bannnerModel, criteria);
 
         const stateObj = {
             page: page,
@@ -85,7 +85,7 @@ export const deleteHeroSection = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const response = await updateData(heroSectionModel, { _id: id }, { isDeleted: true }, {});
+        const response = await updateData(bannnerModel, { _id: id }, { isDeleted: true }, {});
         return res.status(200).json(new apiResponse(200, responseMessage.deleteDataSuccess('Hero Section'), response, {}))
 
     } catch (error) {

@@ -15,7 +15,8 @@ const mentorsSchema = new mongoose.Schema({
     },
 
     priority: { type: Number, default: 1 },
-    isDeleted: { type: Boolean, default: false }
+    isDeleted: { type: Boolean, default: false },
+     isBlocked: { type: Boolean, default: false }, 
 }, { timestamps: true, versionKey: false });
 
 
