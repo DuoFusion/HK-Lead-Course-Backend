@@ -20,8 +20,10 @@ const leadFormSchema = new mongoose.Schema({
     background: { type: String, trim: true },          // e.g., "Engineering", "Commerce"
     itKnowledgeLevel: { type: String, trim: true },    // e.g., "Beginner", "Intermediate", "Advanced"
     additionalMessage: { type: String, trim: true },
+    priority: { type: Number, default: 1 },
+    isDeleted: { type: Boolean, default: false },
+    isBlocked: { type: Boolean, default: false }
+}, { timestamps: true, versionKey: false });
 
-    isDeleted: { type: Boolean, default: false }
-})
 
 export const leadFormModel = mongoose.model('leadForm', leadFormSchema);
