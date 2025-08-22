@@ -1,11 +1,11 @@
 import { apiResponse } from "../../common";
-import { bannnerModel } from "../../database/models/heroSection";
+import { bannnerModel } from "../../database/models/banner";
 import { reqInfo, responseMessage } from "../../helper"
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 const ObjectId = require('mongoose').Types.ObjectId
 
-export const addHeroSection = async (req, res) => {
+export const addBanner = async (req, res) => {
     reqInfo(req)
     try {
 
@@ -14,7 +14,7 @@ export const addHeroSection = async (req, res) => {
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
 
         let response = await createData(bannnerModel, body);
-        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Hero Section'), response, {}));
+        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('banner'), response, {}));
 
     } catch (error) {
         console.log(error);
@@ -23,19 +23,19 @@ export const addHeroSection = async (req, res) => {
     }
 }
 
-export const editHeroSection = async (req, res) => {
+export const editBanner = async (req, res) => {
     reqInfo(req)
     try {
         const body = req.body;
 
-        let isExist = await getFirstMatch(bannnerModel, { _id: new ObjectId(body.heroSectionId) }, {}, { lean: true });
-        if (!isExist) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Hero Section'), {}, {}));
+        let isExist = await getFirstMatch(bannnerModel, { _id: new ObjectId(body.bannerId) }, {}, { lean: true });
+        if (!isExist) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('banner'), {}, {}));
 
-        isExist = await getFirstMatch(bannnerModel, { priority: body.priority, _id: { $ne: new ObjectId(body.heroSectionId) } }, {}, { lean: true });
+        isExist = await getFirstMatch(bannnerModel, { priority: body.priority, _id: { $ne: new ObjectId(body.bannerId) } }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
 
-        const response = await updateData(bannnerModel, { _id: new ObjectId(body.heroSectionId) }, body, {});
-        return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Hero Section'), response, {}));
+        const response = await updateData(bannnerModel, { _id: new ObjectId(body.bannerId) }, body, {});
+        return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('banner'), response, {}));
 
     } catch (error) {
         console.log(error);
@@ -43,7 +43,7 @@ export const editHeroSection = async (req, res) => {
     }
 }
 
-export const getHeroSection = async (req, res) => {
+export const getBanner = async (req, res) => {
     reqInfo(req)
     try {
 
@@ -69,7 +69,7 @@ export const getHeroSection = async (req, res) => {
             page_limit: Math.ceil(totalCount / limit) || 1,
         }
 
-        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Hero Section'), { heroSection_data: response, totalData: totalCount, state: stateObj }, {}));
+        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('banner'), { banner_data: response, totalData: totalCount, state: stateObj }, {}));
 
 
     } catch (error) {
@@ -80,13 +80,13 @@ export const getHeroSection = async (req, res) => {
 }
 
 
-export const deleteHeroSection = async (req, res) => {
+export const deleteBanner = async (req, res) => {
     reqInfo(req)
     try {
         const { id } = req.params;
 
         const response = await updateData(bannnerModel, { _id: id }, { isDeleted: true }, {});
-        return res.status(200).json(new apiResponse(200, responseMessage.deleteDataSuccess('Hero Section'), response, {}))
+        return res.status(200).json(new apiResponse(200, responseMessage.deleteDataSuccess('banner'), response, {}))
 
     } catch (error) {
         console.log(error);

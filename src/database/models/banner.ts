@@ -1,9 +1,11 @@
+import { title } from "process";
+
 var mongoose = require('mongoose')
 
 const bannerSchema = new mongoose.Schema({
      type: { type: String, enum: ['hero', 'workshop'] },
-    heading: { type: String, required: true },
-    Subheading: { type: String },
+    title: { type: String, required: true },
+    subTitle: { type: String },
     cta: { type: String },
     image: { type: String },
     priority: { type: Number, default: 1 },

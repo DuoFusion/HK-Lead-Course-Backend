@@ -9,11 +9,11 @@ import { workshopRoutes } from './workshop'
 import { workshopRegisterRoutes } from './WorkshopRegister'
 import { coursesRoutes } from './courses'
 import { CourseRegisterRoutes } from './courseRegister'
-import { heroSectionRoutes } from './heroSection'
 import { mentorsRoutes } from './mentors'
 import { languageRoutes } from './language'
 import { skillLevelRoutes } from './skillLevel';
 import { whatYouLearnRoutes } from './whatYouLearn';
+import { bannerRouts } from './banner/banner';
 
 
 
@@ -24,7 +24,7 @@ router.use('/workshop', workshopRoutes)
 router.use('/workshop-register', workshopRegisterRoutes)
 router.use('/courses', coursesRoutes)
 router.use('/course-register', CourseRegisterRoutes)
-router.use('/hero-section', heroSectionRoutes)
+router.use('/banner',bannerRouts)
 router.use('/mentors', mentorsRoutes)
 router.use('/aply-cupan', aplyCupanRoutes)
 router.use('/upload', uploadRoutes)
