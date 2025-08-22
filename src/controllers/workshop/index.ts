@@ -118,3 +118,14 @@ export const getWorkshop = async (req, res) => {
 
     }
 }
+
+export const getUserWorkshop = async(req,res)=>{
+    reqInfo(req)
+    try{
+
+    }catch(error){
+        console.log(error);
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        
+    }
+}

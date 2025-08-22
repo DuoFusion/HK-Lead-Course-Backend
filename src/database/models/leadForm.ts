@@ -2,14 +2,14 @@ var mongoose = require('mongoose')
 
 const leadFormSchema = new mongoose.Schema({
 
-    fullName: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true },
-    address: { type: String, trim: true },
-    phone: { type: String, required: true, trim: true },
-    city: { type: String, trim: true },
+    fullName: { type: String },
+    email: { type: String},
+    address: { type: String},
+    phone: { type: String},
+    city: { type: String},
 
     // Interest (multiple bhi ho sake)
-    interest: [{ type: String, trim: true }], // Example: ["Web Development", "AI", "Cloud"]
+    interest: [{ type: String}], // Example: ["Web Development", "AI", "Cloud"]
 
     // Learning Mode (enum for fixed options)
     preferredLearningMode: {
@@ -17,9 +17,9 @@ const leadFormSchema = new mongoose.Schema({
         enum: ["Online", "Offline", "Hybrid"],
         default: "Online"
     },
-    background: { type: String, trim: true },          // e.g., "Engineering", "Commerce"
-    itKnowledgeLevel: { type: String, trim: true },    // e.g., "Beginner", "Intermediate", "Advanced"
-    additionalMessage: { type: String, trim: true },
+    background: { type: String},          // e.g., "Engineering", "Commerce"
+    itKnowledgeLevel: { type: String},    // e.g., "Beginner", "Intermediate", "Advanced"
+    additionalMessage: { type: String},
     priority: { type: Number, default: 1 },
     isDeleted: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false }
