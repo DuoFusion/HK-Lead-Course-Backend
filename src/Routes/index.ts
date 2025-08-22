@@ -36,4 +36,5 @@ router.use('/what-you-learn',whatYouLearnRoutes)
 router.use('/about',aboutRoutes)
 router.use('/testomonial',testomonialRoutes)
 router.use('/faq',faqRoutes)
+
 export { router }

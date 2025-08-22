@@ -47,11 +47,11 @@ export const getBanner = async (req, res) => {
     reqInfo(req)
     try {
 
-        let { search, page, limit,type } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
+        let { search, page, limit,bannerFilter } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
         if (search) {
             criteria.title = { $regex: search, $options: 'si' };
         }
-        if(type) criteria.type = type;
+        if(bannerFilter) criteria.type = bannerFilter;
 
 
         options.sort = { priority: 1, createdAt: -1 };
