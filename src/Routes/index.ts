@@ -17,6 +17,7 @@ import { bannerRouts } from './banner';
 import { aboutRoutes } from './about';
 import { testomonialRoutes } from './testomonial';
 import { faqRoutes } from './faq';
+import { leadFormRoutes } from './leadForm';
 
 
 const router = express.Router()
@@ -36,5 +37,6 @@ router.use('/what-you-learn',whatYouLearnRoutes)
 router.use('/about',aboutRoutes)
 router.use('/testomonial',testomonialRoutes)
 router.use('/faq',faqRoutes)
+router.use('/lead-form',leadFormRoutes)
 
 export { router }
