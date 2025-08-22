@@ -13,7 +13,7 @@ import { mentorsRoutes } from './mentors'
 import { languageRoutes } from './language'
 import { skillLevelRoutes } from './skillLevel';
 import { whatYouLearnRoutes } from './whatYouLearn';
-import { bannerRouts } from './banner/banner';
+import { bannerRouts } from './banner';
 
 
 
@@ -31,4 +31,5 @@ router.use('/upload', uploadRoutes)
 router.use('/language',languageRoutes)
 router.use('/skill-level',skillLevelRoutes)
 router.use('/what-you-learn',whatYouLearnRoutes)
+// router.use('/about',)
 export { router }

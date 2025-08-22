@@ -1,6 +1,6 @@
 import express from 'express';
-import { addBanner, deleteBanner, editBanner, getBanner } from '../../controllers/banner';
-import { adminJWT } from '../../helper';
+import { addBanner, deleteBanner, editBanner, getBanner } from '../controllers/banner';
+import { adminJWT } from '../helper';
 
 const router = express.Router();
 
