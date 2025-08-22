@@ -28,17 +28,23 @@ export const addWorkshop = async (req, res) => {
 }
 
 
+
 export const updateWorkshop = async (req, res) => {
     reqInfo(req);
     try {
 
         const body = req.body;
 
+        console.log("body", body);
+        
         let isExist = await workshopModel.findOne({ type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.workshopId) } });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
 
+        console.log("isExist", isExist);
+        
         const response = await updateData(workshopModel, { _id: new ObjectId(body.workshopId) }, body, {});
-
+        console.log("response", response);
+        
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Workshop'), response, {}));
 
 

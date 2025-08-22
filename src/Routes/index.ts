@@ -14,7 +14,9 @@ import { languageRoutes } from './language'
 import { skillLevelRoutes } from './skillLevel';
 import { whatYouLearnRoutes } from './whatYouLearn';
 import { bannerRouts } from './banner';
-
+import { aboutRoutes } from './about';
+import { testomonialRoutes } from './testomonial';
+import { faqRoutes } from './faq';
 
 
 const router = express.Router()
@@ -31,5 +33,7 @@ router.use('/upload', uploadRoutes)
 router.use('/language',languageRoutes)
 router.use('/skill-level',skillLevelRoutes)
 router.use('/what-you-learn',whatYouLearnRoutes)
-// router.use('/about',)
+router.use('/about',aboutRoutes)
+router.use('/testomonial',testomonialRoutes)
+router.use('/faq',faqRoutes)
 export { router }

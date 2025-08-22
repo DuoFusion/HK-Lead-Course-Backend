@@ -1,5 +1,3 @@
-import { title } from "process";
-
 var mongoose = require('mongoose')
 
 const bannerSchema = new mongoose.Schema({
@@ -10,7 +8,7 @@ const bannerSchema = new mongoose.Schema({
     image: { type: String },
     priority: { type: Number, default: 1 },
     isDeleted: { type: Boolean, default: false },
-      isBlocked: { type: Boolean, default: false }
+    isBlocked: { type: Boolean, default: false }
 }, { timestamps: true, versionKey: false });
 
 export const bannnerModel = mongoose.model('banners', bannerSchema);
