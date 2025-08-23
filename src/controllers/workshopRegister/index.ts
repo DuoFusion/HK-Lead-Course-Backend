@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { workshopRegisterModel } from "../../database/models/workshopRegister";
 import { reqInfo, responseMessage } from "../../helper";
-import { countData, createData, deleteData, getData, updateData } from "../../helper/database_service";
+import { countData, createData, deleteData, findAllWithPopulate, getData, updateData } from "../../helper/database_service";
 
 
 let ObjectId = require('mongoose').Types.ObjectId;
@@ -89,7 +89,14 @@ export const getworkshopRegister = async (req, res) => {
             options.limit = parseInt(limit);
 
         }
-        const response = await getData(workshopRegisterModel, criteria, {}, options);
+
+        let populate =[{
+            path :'workshopId',select:'title shortDescription date time duration instructorImage instructorName thumbnailImage workshopImage price categoryId status fullDescription syllabus faq isBlocked isDeleted',
+        },{
+            path:'couponCodeId' , select : 'name code description discount discountType expiresAt numberOfUses usedCount isActive isDeleted isBlocked',
+        }]
+
+        const response = await findAllWithPopulate(workshopRegisterModel, criteria, {}, options,populate);
         const totalCount = await countData(workshopRegisterModel, criteria)
 
         const stateObj = {

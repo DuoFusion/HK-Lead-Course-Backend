@@ -8,7 +8,7 @@ const cupanCodeSchema = new mongoose.Schema({
     discount: { type: Number},
     discountType: { type: String, enum: ["price", "percentage"] },
     expiresAt: { type: Date },
-    numberOfUses: { type: Number, min: 1 },
+    numberOfUses: { type: Number, default: 0 },
     usedCount: { type: Number, default: 0 },
     isActive:{type:Boolean,default:true},
      isDeleted:{type:Boolean,default:false},
