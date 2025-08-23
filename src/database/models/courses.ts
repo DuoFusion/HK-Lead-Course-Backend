@@ -3,8 +3,8 @@ import { COURSE_DISCOUNT } from "../../common";
 var mongoose = require('mongoose')
 
 const faqSchema = new mongoose.Schema({
-  question: { type: String, required: true },
-  answer: { type: String, required: true }
+  question: { type: String },
+  answer: { type: String}
 }, { _id: false });
 
 const testimonialSchema = new mongoose.Schema({

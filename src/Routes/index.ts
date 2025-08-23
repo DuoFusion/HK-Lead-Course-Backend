@@ -19,6 +19,7 @@ import { testomonialRoutes } from './testomonial';
 import { faqRoutes } from './faq';
 import { leadFormRoutes } from './leadForm';
 import { interestRoutes } from './interest';
+import { profileSettingRoutes } from './profileSetting';
 
 
 const router = express.Router()
@@ -40,5 +41,6 @@ router.use('/testomonial',testomonialRoutes)
 router.use('/faq',faqRoutes)
 router.use('/lead-form',leadFormRoutes)
 router.use('/interest' , interestRoutes)
+router.use('/profile-setting',profileSettingRoutes)
 
 export { router }

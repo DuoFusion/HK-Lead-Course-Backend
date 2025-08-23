@@ -2,8 +2,8 @@
 
 var mongoose = require('mongoose');
 const faqSchema = new mongoose.Schema({
-  question: { type: String, required: true },
-  answer: { type: String, required: true }
+  question: { type: String },
+  answer: { type: String}
 }, { _id: false }); // _id: false = pratyek faq mate id generate nahi thase
 
 const workshopSchema = new mongoose.Schema({
