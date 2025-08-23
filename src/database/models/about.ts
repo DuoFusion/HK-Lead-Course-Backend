@@ -1,7 +1,7 @@
 var mongoose = require('mongoose')
 
 const aboutSchema = new mongoose.Schema({
-    aboutUs: { type: String, required: true },
+    aboutUs: { type: String},
     isDeleted: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false }
 
