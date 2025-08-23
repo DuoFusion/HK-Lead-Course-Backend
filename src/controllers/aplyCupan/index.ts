@@ -57,7 +57,7 @@ export const getCupan = async (req, res) => {
 
         }
         // let responce = await cupanCodeModel.find({isDeleted: false});
-        return res.status(200).json(new apiResponse(200, responseMessage?.getDataSuccess("Cupan"), { cupan_data: response, totalData: totalCount, state: stateObj }, {}));
+        return res.status(200).json(new apiResponse(200, responseMessage?.getDataSuccess("Cupan"), { coupon_data: response, totalData: totalCount, state: stateObj }, {}));
 
     } catch (error) {
         console.log(error);
