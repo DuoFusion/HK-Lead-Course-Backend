@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common"
 import {  webSettingModel } from "../../database/models/webSetting"
 import { reqInfo, responseMessage } from "../../helper"
-import { addEditProfileSettingSchema } from "../../validation/profile-Setting"
+import { addEditwebSettingSchema } from "../../validation/web-Setting"
 
 
 const ObjectId = require('mongoose').Types.ObjectId
@@ -9,7 +9,7 @@ const ObjectId = require('mongoose').Types.ObjectId
 export const add_edit_web_Setting = async(req,res)=>{
      reqInfo(req)
         try {
-            const { error, value } = addEditProfileSettingSchema.validate(req.body)
+            const { error, value } = addEditwebSettingSchema.validate(req.body)
             if (error) return res.status(501).json(new apiResponse(501, error?.details[0]?.message, {}, {}))
     
             const response = await webSettingModel.findOneAndUpdate({ isDeleted: false }, value, { new: true, upsert: true })

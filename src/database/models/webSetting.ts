@@ -5,13 +5,13 @@ const webSettingSchema = new mongoose.Schema({
     email :{ type: String},
     phoneNumber: { type: Number},
     whatsappNumber: { type: Number},
-    message : { type: String},
+    whatsappMessage : { type: String},
     address : { type: String},
       socialMedia: {
         instagram: { type: String },
         facebook: { type: String },
         whatsapp: { type: String },
-        LinkdIn: { type: String }
+        linkedin: { type: String }
     },
     isDeleted: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false }
