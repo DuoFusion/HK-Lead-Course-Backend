@@ -1,13 +1,12 @@
 var mongoose = require('mongoose')
 
-const profileSettingSchema = new mongoose.Schema({
-    name: { type: String},
+const webSettingSchema = new mongoose.Schema({
+    
     email :{ type: String},
     phoneNumber: { type: String},
     whatsappNumber: { type: String},
     message : { type: String},
     address : { type: String},
-    profileImage : { type: String},
       socialMedia: {
         instagram: { type: String },
         facebook: { type: String },
@@ -18,4 +17,4 @@ const profileSettingSchema = new mongoose.Schema({
     isBlocked: { type: Boolean, default: false }
 }, { timestamps: true, versionKey: false })
 
-export const profileSettingModel = mongoose.model('profileSetting', profileSettingSchema);
+export const webSettingModel = mongoose.model('profileSetting', webSettingSchema);
