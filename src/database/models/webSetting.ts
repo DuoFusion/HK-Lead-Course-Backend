@@ -3,8 +3,8 @@ var mongoose = require('mongoose')
 const webSettingSchema = new mongoose.Schema({
     
     email :{ type: String},
-    phoneNumber: { type: String},
-    whatsappNumber: { type: String},
+    phoneNumber: { type: Number},
+    whatsappNumber: { type: Number},
     message : { type: String},
     address : { type: String},
       socialMedia: {

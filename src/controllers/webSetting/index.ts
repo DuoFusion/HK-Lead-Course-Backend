@@ -24,7 +24,6 @@ export const add_edit_web_Setting = async(req,res)=>{
 export const get_web_Setting = async (req, res) => {
     reqInfo(req)
     let { user } = req.headers
-    console.log("user", user);
     try {
         const response = await webSettingModel.findOne({ isDeleted: false })
         if (!response) return res.status(404).json(new apiResponse(404, responseMessage?.getDataNotFound("web setting"), {}, {}))
