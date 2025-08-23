@@ -1,7 +1,7 @@
 import { apiResponse } from "../../common";
 import { leadFormModel } from "../../database/models/leadForm";
 import { reqInfo, responseMessage } from "../../helper";
-import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, findAllWithPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 const ObjectId = require('mongoose').Types.ObjectId
@@ -62,7 +62,10 @@ export const getLeadForm = async (req, res) => {
             options.limit = parseInt(limit);
         }
 
-        const response = await getData(leadFormModel, criteria, {}, options);
+        let populate = [
+            { path: 'interestId', select: 'name priority' }
+        ]
+        const response = await findAllWithPopulate(leadFormModel, criteria, {}, options,populate);
         const totalCount = await countData(leadFormModel, criteria);
 
         const stateObj = {

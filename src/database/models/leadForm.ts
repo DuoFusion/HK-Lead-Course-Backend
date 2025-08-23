@@ -8,11 +8,8 @@ const leadFormSchema = new mongoose.Schema({
     phone: { type: String},
     city: { type: String},
 
-    // Interest (multiple bhi ho sake)
-    interest: [{ type: String}], // Example: ["Web Development", "AI", "Cloud"]
-
-    // Learning Mode (enum for fixed options)
-    preferredLearningMode: {
+    interestId:{type:mongoose.Schema.Types.ObjectId,ref:'interest'},
+  preferredLearningMode: {
         type: String,
         enum: ["Online", "Offline", "Hybrid"],
         default: "Online"
