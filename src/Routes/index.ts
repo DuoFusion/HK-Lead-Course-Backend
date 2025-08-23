@@ -18,6 +18,7 @@ import { aboutRoutes } from './about';
 import { testomonialRoutes } from './testomonial';
 import { faqRoutes } from './faq';
 import { leadFormRoutes } from './leadForm';
+import { interestRoutes } from './interest';
 
 
 const router = express.Router()
@@ -38,5 +39,6 @@ router.use('/about',aboutRoutes)
 router.use('/testomonial',testomonialRoutes)
 router.use('/faq',faqRoutes)
 router.use('/lead-form',leadFormRoutes)
+router.use('/interest' , interestRoutes)
 
 export { router }
