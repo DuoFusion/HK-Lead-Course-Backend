@@ -5,13 +5,13 @@ export const addEditwebSettingSchema = joi.object().keys({
    email: joi.string(),
    phoneNumber: joi.number(),
    whatsappNumber: joi.number(),
-   whatsappMessage: joi.string(),
+   whatsappMessage: joi.string().allow(null, ''),
    address: joi.string(),
    profileImage: joi.string(),
    socialMedia: {
-      instagram: joi.string(),
-      facebook: joi.string(),
-      whatsapp: joi.string(),
-      linkedin: joi.string()
+      instagram: joi.string().allow(null, ''),
+      facebook: joi.string().allow(null, ''),
+      whatsapp: joi.string().allow(null, ''),
+      linkedin: joi.string().allow(null, '')
    }
 })

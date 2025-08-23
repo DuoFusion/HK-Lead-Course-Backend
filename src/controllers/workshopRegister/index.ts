@@ -24,6 +24,8 @@ export const addWorkShopRegister = async (req, res) => {
     }
 }
 
+// export const c
+
 export const updateworkshopRegister = async (req, res) => {
     reqInfo(req)
     try {

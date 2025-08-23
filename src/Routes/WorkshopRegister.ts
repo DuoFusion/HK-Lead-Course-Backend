@@ -6,6 +6,7 @@ const router = express.Router()
 
 
 router.post('/add',addWorkShopRegister)
+router.post('/razorpay')
 router.use(adminJWT)
 router.post('/edit',updateworkshopRegister)
 router.get('/',getworkshopRegister)
