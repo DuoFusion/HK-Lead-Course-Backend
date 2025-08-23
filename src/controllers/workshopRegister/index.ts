@@ -24,7 +24,30 @@ export const addWorkShopRegister = async (req, res) => {
     }
 }
 
-// export const c
+export const createRazorpayworkshopRegister = async(payload)=>{
+    const {amount, currency = 'INR' , receipt} = payload;
+
+    try{
+        const options = {
+            amount: amount,
+            currency,
+            receipt,
+        };
+    
+        //  const order = await razorpay.orders.create(options);
+
+    // res.json({
+    //   success: true,
+    //   order,
+    // });
+
+
+    }catch(error){
+        console.log(error);
+        return null;
+        
+    }
+}
 
 export const updateworkshopRegister = async (req, res) => {
     reqInfo(req)
@@ -77,8 +100,6 @@ export const getworkshopRegister = async (req, res) => {
         };
 
         return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Workshop Register'), { category_data: response, totalData: totalCount, state: stateObj }, {}));
-
-
 
     } catch (error) {
         console.log(error);
