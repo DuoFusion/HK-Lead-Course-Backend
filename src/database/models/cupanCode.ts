@@ -10,6 +10,8 @@ const cupanCodeSchema = new mongoose.Schema({
     expiresAt: { type: Date },
     numberOfUses: { type: Number, default: 0 },
     usedCount: { type: Number, default: 0 },
+    startDate: { type: Date },
+    endDate: { type: Date },
     isActive:{type:Boolean,default:true},
      isDeleted:{type:Boolean,default:false},
     isBlocked:{type:Boolean,default:false}

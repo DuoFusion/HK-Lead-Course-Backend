@@ -93,7 +93,7 @@ export const getworkshopRegister = async (req, res) => {
         let populate =[{
             path :'workshopId',select:'title shortDescription date time duration instructorImage instructorName thumbnailImage workshopImage price categoryId status fullDescription syllabus faq isBlocked isDeleted',
         },{
-            path:'couponCodeId' , select : 'name code description discount discountType expiresAt numberOfUses usedCount isActive isDeleted isBlocked',
+            path:'couponCodeId' , select : 'name code description discount discountType expiresAt startDate endDate numberOfUses usedCount isActive isDeleted isBlocked',
         }]
 
         const response = await findAllWithPopulate(workshopRegisterModel, criteria, {}, options,populate);

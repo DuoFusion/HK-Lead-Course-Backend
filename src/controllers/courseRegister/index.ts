@@ -58,6 +58,11 @@ export const getCourseRegister = async (req, res) => {
             options.limit = parseInt(limit);
         }
 
+        let populate = [{
+  price: { type: Number, required: true },
+            path: 'courseId', select: 'title subtitle background shortDescription duration skillLevelId price totalLectures totalHours ',
+        }]
+
         const response = await getData(courseRegisterModel, criteria, {}, options);
         const totalCount = await countData(courseRegisterModel, criteria);
 
