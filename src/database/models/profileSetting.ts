@@ -7,6 +7,7 @@ const profileSettingSchema = new mongoose.Schema({
     whatsappNumber: { type: String},
     message : { type: String},
     address : { type: String},
+    profileImage : { type: String},
       socialMedia: {
         instagram: { type: String },
         facebook: { type: String },
