@@ -1,19 +1,19 @@
 var mongoose = require('mongoose');
 
 const cupanCodeSchema = new mongoose.Schema({
-    code:{type:String},
-    description:{type:String},
-    discountType:{type:String,enum:['percentage','fixed'],required:true},
-    discountValue:{type:Number,required:true},
-    maxDiscountAmount:{type:Number},
-    usageLimit:{type:Number,default:1},
-    usageCount:{type:Number,default:0},
-    userUsageLimit:{type:Number,default:1},
-    validFrom:{type:Date},
-    validTo:{type:Date},
-    // isActive:{type:Boolean,default:true},
+     
+    name: { type: String},
+    code: {  type: String },
+    description: { type: String },
+    discount: { type: Number},
+    discountType: { type: String, enum: ["price", "percentage"] },
+    expiresAt: { type: Date },
+    numberOfUses: { type: Number, min: 1 },
+    usedCount: { type: Number, default: 0 },
+    isActive:{type:Boolean,default:true},
      isDeleted:{type:Boolean,default:false},
     isBlocked:{type:Boolean,default:false}
+
 },{timestamps:true,versionKey:false});
 
 
