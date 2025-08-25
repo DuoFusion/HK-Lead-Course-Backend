@@ -27,8 +27,8 @@ export const editcourseRegister = async (req, res) => {
     try {
         const body = req.body;
 
-        let isExist = await getFirstMatch(courseRegisterModel, { priority: body.priority, _id: { $ne: new ObjectId(body.courseRegisterId) } }, {}, { lean: true });
-        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
+        let isExist = await getFirstMatch(courseRegisterModel, { email: body.email , _id: { $ne: new ObjectId(body.courseRegisterId) } }, {}, { lean: true });
+        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('email'), {}, {}));
 
         const response = await updateData(courseRegisterModel, { _id: new ObjectId(body.courseRegisterId) }, body, {});
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Course Register'), response, {}));
