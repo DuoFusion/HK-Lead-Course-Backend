@@ -19,4 +19,4 @@ const couponCodeSchema = new mongoose.Schema({
 },{timestamps:true,versionKey:false});
 
 
-export const couponCodeModel = mongoose.model('coupon-code',couponCodeSchema);
+export const couponCodeModel = mongoose.model('couponCode',couponCodeSchema);

@@ -5,7 +5,7 @@ const courseRegisterSchema = new mongoose.Schema({
   email: { type: String },
   phoneNumber: { type: String, required: true },
   city: { type: String },
-  paymentMethod: { type: String, enum: ["UPI", "Card", "NetBanking", "Cash"], required: true },
+  paymentMethod: { type: String, enum: ["UPI", "Card", "NetBanking"], required: true },
   transactionId: { type: String, required: true },
   paymentStatus: { type: String, enum: ["Pending", "Success", "Failed"], default: "Pending" },
 
@@ -13,7 +13,7 @@ const courseRegisterSchema = new mongoose.Schema({
   
    courseId: { type: mongoose.Schema.Types.ObjectId,ref:'course' },
   paidDateTime: { type: Date, default: Date.now },
-  couponCodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'coupon-code' },
+  couponCodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'couponCode' },
   profession: { type: String },
   isBlocked: { type: Boolean, default: false },
   isDeleted: { type: Boolean, default: false },
