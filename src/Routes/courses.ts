@@ -1,11 +1,11 @@
 import Router from 'express';
-import { addCourse, course_testimonial_add, deleteCourse, editCourse, getCourse, getUserCourse } from '../controllers/courses';
+import { addCourse, course_testimonial_add, deleteCourse, editCourse, getCourse, getCourseById } from '../controllers/courses';
 import { adminJWT } from '../helper';
 
 const router = Router();
 
 router.post('/testimonial',course_testimonial_add)
-// router.get('/user',getUserCourse)
+router.get('/:id',getCourseById)
 router.get('/',getCourse);
 
 router.use(adminJWT)

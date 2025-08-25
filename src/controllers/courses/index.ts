@@ -111,56 +111,21 @@ export const getCourse = async (req, res) => {
     }
 }
 
-export const getUserCourse = async (req, res) => {
+export const getCourseById = async (req, res) => {
     reqInfo(req)
-    try {
 
-        let { search, page, limit, blockFilter } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
-        if (search) {
-            criteria.title = { $regex: search, $options: 'si' };
+    try{
 
-        }
+        const { id } = req.params;
+        const response = await getFirstMatch(courseModel, { _id: id },{}, { lean: true });
+        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Course'), response, {}));
 
-        if (blockFilter) criteria.isBlocked = blockFilter;
-
-        options.sort = { priority: 1, createdAt: -1 };
-
-        const pageNum = parseInt(page) || 1;
-        const limitNum = parseInt(limit) || 0;
-
-        if (page && limit) {
-            options.skip = (parseInt(page) - 1) * parseInt(limit);
-            options.limit = parseInt(limit);
-        }
-        let populate =[{
-            path:'courseLanguageId',select:'name priority',
-        }
-        ,{
-            path:'skillLevelId' , select:'title priority'
-
-        }
-        ,{
-            path:'whatYouLearnId',select:'title priority'
-        }
-    ]
-        
-
-        const response = await findAllWithPopulate(courseModel, criteria, {}, options,populate);
-        const totalCount = await countData(courseModel, criteria);
-
-        const stateObj = {
-            page: pageNum,
-            limit: limitNum,
-            page_limit: Math.ceil(totalCount / limitNum) || 1,
-        }
-
-        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Course'), { course_data: response, totalData: totalCount, state: stateObj }, {}));
-
-    } catch (error) {
+    }catch(error){
         console.log(error);
-        return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error))
-        }
-} 
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
+        
+    }
+}
 
 export const course_testimonial_add = async (req, res) => {
     reqInfo(req)
