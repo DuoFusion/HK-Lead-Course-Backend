@@ -5,9 +5,9 @@ import { addMentors, deleteMentors, editMentors, getMentors } from '../controlle
 
 const router = express.Router();
 
+router.get('/',getMentors)
 router.use(adminJWT)
 router.post('/add',addMentors)
-router.get('/',getMentors)
 router.post('/edit',editMentors)
 router.delete('/delete/:id',deleteMentors)
 

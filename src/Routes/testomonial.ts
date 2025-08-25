@@ -5,10 +5,10 @@ import { addTestomonial, deleteTestomonial, editTestomonial, getTestomonial } fr
 
 const router = express.Router()
 
+router.get('/',getTestomonial)
 router.use(adminJWT)
 router.post('/add',addTestomonial)
 router.post('/edit',editTestomonial)
-router.get('/',getTestomonial)
 router.delete('/delete/:id',deleteTestomonial)
 
 export const testomonialRoutes = router 

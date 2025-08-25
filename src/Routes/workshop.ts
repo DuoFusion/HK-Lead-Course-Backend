@@ -6,11 +6,11 @@ import { adminJWT } from '../helper';
 const router = express.Router();
 
 
-router.get('/user',getUserWorkshop)
+// router.get('/user',getUserWorkshop)
+router.get('/', getWorkshop)
 router.use(adminJWT)
 router.post('/add', addWorkshop)
 router.post('/edit', updateWorkshop)
-router.get('/', getWorkshop)
 router.delete('/delete/:id', deleteWorkshop)
 
 

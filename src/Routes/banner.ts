@@ -4,11 +4,11 @@ import { adminJWT } from '../helper';
 
 const router = express.Router();
 
+router.get('/',getBanner)
 
 router.use(adminJWT)
 router.post('/add',addBanner)
 router.post('/edit',editBanner)
-router.get('/',getBanner)
 router.delete('/delete/:id',deleteBanner)
 
 
