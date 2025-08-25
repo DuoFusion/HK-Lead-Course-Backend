@@ -1,7 +1,8 @@
+import path from "path";
 import { apiResponse } from "../../common";
 import { courseRegisterModel } from "../../database/models/courseRegister";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
+import { countData, createData, findAllWithPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
 
 const ObjectId = require('mongoose').Types.ObjectId
@@ -10,8 +11,8 @@ export const addCourseRegister = async (req, res) => {
     reqInfo(req)
     const body = req.body;
     try {
-        let isExist = await getFirstMatch(courseRegisterModel, { priority: body.priority }, {}, { lean: true });
-        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
+        let isExist = await getFirstMatch(courseRegisterModel, {email: body.email }, {}, { lean: true });
+        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('email'), {}, {}));
 
         const response = await createData(courseRegisterModel, body);
         return res.status(200).json(new apiResponse(200, responseMessage.addDataSuccess('Course Register'), response, {}));
@@ -59,11 +60,13 @@ export const getCourseRegister = async (req, res) => {
         }
 
         let populate = [{
-  price: { type: Number, required: true },
             path: 'courseId', select: 'title subtitle background shortDescription duration skillLevelId price totalLectures totalHours ',
-        }]
+        },
+    {
+       path:'couponCodeId',select:'name code description discount discountType expiresAt startDate endDate numberOfUses usedCount isActive isDeleted isBlocked' 
+    }]
 
-        const response = await getData(courseRegisterModel, criteria, {}, options);
+        const response = await findAllWithPopulate(courseRegisterModel, criteria, {}, options, populate);
         const totalCount = await countData(courseRegisterModel, criteria);
 
         const stateObj = {

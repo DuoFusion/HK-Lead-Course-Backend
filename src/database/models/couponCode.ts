@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-const cupanCodeSchema = new mongoose.Schema({
+const couponCodeSchema = new mongoose.Schema({
      
     name: { type: String},
     code: {  type: String },
@@ -19,4 +19,4 @@ const cupanCodeSchema = new mongoose.Schema({
 },{timestamps:true,versionKey:false});
 
 
-export const cupanCodeModel = mongoose.model('cupan-code',cupanCodeSchema);
+export const couponCodeModel = mongoose.model('coupon-code',couponCodeSchema);

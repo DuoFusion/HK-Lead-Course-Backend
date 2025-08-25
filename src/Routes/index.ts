@@ -4,7 +4,6 @@ import { userStatus } from '../common'
 import { authRoutes } from './auth'
 import { uploadRoutes } from './upload'
 import { categoryRoutes } from './category'
-import { aplyCupanRoutes } from './aplyCupan'
 import { workshopRoutes } from './workshop'
 import { workshopRegisterRoutes } from './WorkshopRegister'
 import { coursesRoutes } from './courses'
@@ -20,6 +19,7 @@ import { faqRoutes } from './faq';
 import { leadFormRoutes } from './leadForm';
 import { interestRoutes } from './interest';
 import { webSettingRoutes } from './webSetting';
+import { aplyCouponRoutes } from './aplyCoupon';
 
 
 const router = express.Router()
@@ -31,7 +31,7 @@ router.use('/courses', coursesRoutes)
 router.use('/course-register', CourseRegisterRoutes)
 router.use('/banner',bannerRouts)
 router.use('/mentors', mentorsRoutes)
-router.use('/coupon-code', aplyCupanRoutes)
+router.use('/coupon-code', aplyCouponRoutes)
 router.use('/upload', uploadRoutes)
 router.use('/language',languageRoutes)
 router.use('/skill-level',skillLevelRoutes)

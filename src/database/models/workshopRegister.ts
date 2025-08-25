@@ -10,7 +10,7 @@ const workshopRegisterSchema = new mongoose.Schema({
     //  priority: { type: Number, default: 1 },
     paymentStatus: {type:String, enum: ['paid', 'unpaid'] },
     fees: { type: Number, required: true },
-    couponCodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'cupan-code' },
+    couponCodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'coupon-code' },
     paymentMethod: { type: String, required: true },
     transactionId: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
