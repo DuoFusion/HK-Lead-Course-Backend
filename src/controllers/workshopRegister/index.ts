@@ -1,7 +1,11 @@
+import { config } from "../../../config";
 import { apiResponse } from "../../common";
+import { userModel } from "../../database";
 import { workshopRegisterModel } from "../../database/models/workshopRegister";
 import { reqInfo, responseMessage } from "../../helper";
 import { countData, createData, deleteData, findAllWithPopulate, getData, updateData } from "../../helper/database_service";
+
+import Razorpay from 'razorpay';
 
 
 let ObjectId = require('mongoose').Types.ObjectId;
@@ -34,20 +38,42 @@ export const createRazorpayworkshopRegister = async(payload)=>{
             receipt,
         };
     
-        //  const order = await razorpay.orders.create(options);
+        // let  user = await userModel.findOne({email:payload.email,isDeleted:false}).select('razorpayKeyId razorpayKeySecret').lean()
+        const razorpay = new Razorpay({
+            key_id: config.RAZORPAY_KEY_ID as string,
+            key_secret: config.RAZORPAY_KEY_SECRET as string,
+        })
+        
+        const order = await razorpay.orders.create(options);
+        return order;
+     
 
-    // res.json({
-    //   success: true,
-    //   order,
-    // });
+    }catch(error){
+        console.log(error);
+        return null;    
+    }
+}
+
+
+export const verifyRazorpayPayment = async (req,res)=>{
+    reqInfo(req)
+    
+    let { razorpay_order_id,razorpay_payment_id,razorpay_signature} = req.body,{user}= req.headers;
+    try{
+        const sign = razorpay_order_id+"|"+razorpay_payment_id;
+
+        // const 
 
 
     }catch(error){
         console.log(error);
-        return null;
+        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
         
     }
+  
+
 }
+
 
 export const updateworkshopRegister = async (req, res) => {
     reqInfo(req)
