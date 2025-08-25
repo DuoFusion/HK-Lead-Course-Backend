@@ -11,8 +11,8 @@ export const addWorkShopRegister = async (req, res) => {
     try {
         const body = req.body;
 
-        let isExist = await workshopRegisterModel.findOne({ priority: body.priority, isDeleted: false });
-        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}))
+        let isExist = await workshopRegisterModel.findOne({ email: body.email, isDeleted: false });
+        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("email"), {}, {}))
 
         const response = await createData(workshopRegisterModel, body);
         return res.status(200).json(new apiResponse(200, responseMessage.addDataSuccess('Workshop Register'), response, {}))

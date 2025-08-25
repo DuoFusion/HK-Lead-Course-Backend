@@ -7,7 +7,7 @@ const workshopRegisterSchema = new mongoose.Schema({
     phoneNumber: { type: String, required: true },
     city: { type: String },
     profession: { type: String },
-     priority: { type: Number, default: 1 },
+    //  priority: { type: Number, default: 1 },
     paymentStatus: {type:String, enum: ['paid', 'unpaid'] },
     fees: { type: Number, required: true },
     couponCodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'cupan-code' },
