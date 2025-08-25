@@ -9,7 +9,7 @@ const courseRegisterSchema = new mongoose.Schema({
   transactionId: { type: String, required: true },
   paymentStatus: { type: String, enum: ["Pending", "Success", "Failed"], default: "Pending" },
 
-   coursePricePaid:{type:Number},
+   fees:{type:Number},
   
    courseId: { type: mongoose.Schema.Types.ObjectId,ref:'course' },
   paidDateTime: { type: Date, default: Date.now },
