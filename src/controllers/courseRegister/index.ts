@@ -112,7 +112,7 @@ export const getCourseRegister = async (req, res) => {
     //     let populate = [{
     //         path: 'courseId', select: 'title subtitle background shortDescription duration skillLevelId price totalLectures totalHours ',
     //     },{
-    //         path:'couponCodeId' , select : 'name code description discount discountType expiresAt startDate endDate numberOfUses usedCount isActive isDeleted isBlocked',
+    //         path:'couponCodeId' , select : 'name code description discount discountType  startDate endDate numberOfUses usedCount isActive isDeleted isBlocked',
     //  } ]
      
 let populate = [
@@ -122,7 +122,7 @@ let populate = [
   },
   {
     path: 'couponCodeId',
-    select: 'name code description discount discountType expiresAt startDate endDate numberOfUses usedCount isActive isDeleted isBlocked'
+    select: 'name code description discount discountType  startDate endDate numberOfUses usedCount isActive isDeleted isBlocked'
   }
 ]
 

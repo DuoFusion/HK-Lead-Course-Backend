@@ -22,3 +22,13 @@ export const COURSE_DISCOUNT = {
     PERCENTAGE: "percentage",
     FIXED: "fixed"
 }
+
+export const BANNER ={
+    HERO:"hero",
+    WORKSHOP:"workshop"
+}
+
+export const COUPON_DISCOUNT = {
+    PERCENTAGE: "percentage",
+    FIXED: "fixed"
+}

@@ -99,7 +99,7 @@ export const addWorkShopRegister = async (req, res) => {
         })
 
         const order = await razorpay.orders.create({
-            amount: body.fees * 100, // amount in paise
+            amount: body.fees / 100, // amount in paise
             currency: "INR",
             receipt: `receipt_${newRegister._id}`,
         });
@@ -196,7 +196,7 @@ export const getworkshopRegister = async (req, res) => {
         },
        {
     path: 'couponCodeId',
-    select: 'name code description discount discountType expiresAt startDate endDate numberOfUses usedCount isActive isDeleted isBlocked'
+    select: 'name code description discount discountType  startDate endDate numberOfUses usedCount isActive isDeleted isBlocked'
   }]
 
         const response = await findAllWithPopulate(workshopRegisterModel, criteria, {}, options,populate);

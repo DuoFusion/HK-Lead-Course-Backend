@@ -1,7 +1,9 @@
+import { BANNER } from "../../common";
+
 var mongoose = require('mongoose')
 
 const bannerSchema = new mongoose.Schema({
-     type: { type: String, enum: ['hero', 'workshop'] },
+     type: { type: String, enum:Object.values(BANNER) },
     title: { type: String },
     subTitle: { type: String },
     cta: { type: String },
