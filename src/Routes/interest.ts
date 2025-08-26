@@ -4,10 +4,10 @@ import { addInterest, deleteInterest, editInterest, getInterest } from '../contr
 
 const router = express.Router();
 
+router.get('/',getInterest)
 router.use(adminJWT)
 router.post('/add',addInterest)
 router.post('/edit',editInterest)
-router.get('/',getInterest)
 router.delete('/delete/:id',deleteInterest)
 
 

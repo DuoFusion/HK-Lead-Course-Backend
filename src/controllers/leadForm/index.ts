@@ -11,8 +11,8 @@ export const addLeadForm = async (req, res) => {
     try {
 
         const body = req.body;
-        let isExist = await getFirstMatch(leadFormModel, { priority: body.priority }, {}, { lean: true });
-        if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
+        // let isExist = await getFirstMatch(leadFormModel, {}, {}, { lean: true });
+        // if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
 
         let response = await createData(leadFormModel, body);
         return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('lead form'), response, {}));

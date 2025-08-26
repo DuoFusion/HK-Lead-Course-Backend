@@ -17,7 +17,7 @@ const leadFormSchema = new mongoose.Schema({
     background: { type: String},          // e.g., "Engineering", "Commerce"
     itKnowledgeLevel: { type: String},    // e.g., "Beginner", "Intermediate", "Advanced"
     additionalMessage: { type: String},
-    priority: { type: Number, default: 1 },
+    // priority: { type: Number, default: 1 },
     isDeleted: { type: Boolean, default: false },
     isBlocked: { type: Boolean, default: false }
 }, { timestamps: true, versionKey: false });
