@@ -7,6 +7,9 @@ const webSettingSchema = new mongoose.Schema({
     whatsappNumber: { type: Number},
     whatsappMessage : { type: String},
     address : { type: String},
+    razorpayKeyId : { type: String},
+    razorpayKeySecret : { type: String},
+
       socialMedia: {
         instagram: { type: String },
         facebook: { type: String },
