@@ -30,5 +30,5 @@ export const BANNER ={
 
 export const COUPON_DISCOUNT = {
     PERCENTAGE: "percentage",
-    FIXED: "fixed"
+    PRICE: "price"
 }

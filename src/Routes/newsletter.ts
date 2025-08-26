@@ -13,4 +13,4 @@ router.delete('/:id',deleteNewsletter)
 router.get('/',getNewsletter)
 
 
-export const newsletterRoutes = router
+export const newsLetterRoutes = router

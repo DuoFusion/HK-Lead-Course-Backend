@@ -20,7 +20,7 @@ import { leadFormRoutes } from './leadForm';
 import { interestRoutes } from './interest';
 import { webSettingRoutes } from './webSetting';
 import { aplyCouponRoutes } from './aplyCoupon';
-import { newsletterRoutes } from './newsletter';
+import { newsLetterRoutes } from './newsletter';
 
 
 const router = express.Router()
@@ -43,6 +43,6 @@ router.use('/faq',faqRoutes)
 router.use('/lead-form',leadFormRoutes)
 router.use('/interest' , interestRoutes)
 router.use('/web-setting',webSettingRoutes)
-router.use('/news-letter',newsletterRoutes )
+router.use('/news-letter',newsLetterRoutes )
 
 export { router }
