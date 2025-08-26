@@ -8,6 +8,8 @@ export const addEditwebSettingSchema = joi.object().keys({
    whatsappMessage: joi.string().allow(null, ''),
    address: joi.string(),
    profileImage: joi.string(),
+   razorpayKeyId: joi.string(),
+   razorpayKeySecret: joi.string(),
    socialMedia: {
       instagram: joi.string().allow(null, ''),
       facebook: joi.string().allow(null, ''),
