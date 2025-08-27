@@ -63,14 +63,14 @@ export const getCourse = async (req, res) => {
     reqInfo(req)
     try {
 
-        let { search, page, limit, blockFilter } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
+        let { search, page, limit, blockFilter,FeaturesFilter } = req.query, options: any = { lean: true }, criteria: any = { isDeleted: false };
         if (search) {
             criteria.title = { $regex: search, $options: 'si' };
 
         }
 
         if (blockFilter) criteria.isBlocked = blockFilter;
-
+        if(FeaturesFilter) criteria.isFeatures = FeaturesFilter
         options.sort = { priority: 1, createdAt: -1 };
 
         const pageNum = parseInt(page) || 1;

@@ -1,3 +1,5 @@
+import { COURSE_REGISTER_PAYMENT_METHOD, COURSE_REGISTER_PAYMENT_STATUS } from "../../common";
+
 var mongoose = require('mongoose')
 
 const courseRegisterSchema = new mongoose.Schema({
@@ -5,9 +7,9 @@ const courseRegisterSchema = new mongoose.Schema({
   email: { type: String },
   phoneNumber: { type: String, required: true },
   city: { type: String },
-  paymentMethod: { type: String, enum: ["UPI", "Card", "NetBanking"], required: true },
+  paymentMethod: { type: String, enum:Object.values(COURSE_REGISTER_PAYMENT_METHOD)},
   transactionId: { type: String, required: true },
-  paymentStatus: { type: String, enum: ["Pending", "Success", "Failed"], default: "Pending" },
+  paymentStatus: { type: String, enum:Object.values(COURSE_REGISTER_PAYMENT_STATUS), default: "Pending" },
 
    fees:{type:Number},
   

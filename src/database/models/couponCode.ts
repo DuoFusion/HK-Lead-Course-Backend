@@ -1,3 +1,5 @@
+import { COUPON_DISCOUNT } from "../../common";
+
 var mongoose = require('mongoose');
 
 const couponCodeSchema = new mongoose.Schema({
@@ -6,7 +8,7 @@ const couponCodeSchema = new mongoose.Schema({
     code: { type: String },
     description: { type: String },
     discount: { type: Number },
-    discountType: { type: String, enum: ["price", "percentage"] },
+    discountType: { type: String, enum:Object.values(COUPON_DISCOUNT) },
     startDate: { type: Date },
     endDate: { type: Date },
     numberOfUses: { type: Number, default: 0 },

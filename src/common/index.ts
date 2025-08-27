@@ -32,3 +32,24 @@ export const COUPON_DISCOUNT = {
     PERCENTAGE: "percentage",
     PRICE: "price"
 }
+
+export const COURSE_REGISTER_PAYMENT_METHOD = {
+
+    CARD :"card",
+    UPI :"UPI",
+    NETBANKING :"NetBanking"
+}
+
+export const COURSE_REGISTER_PAYMENT_STATUS = {
+
+    PENDING :"Pending",
+    SUCCESS :"Success",
+    FAILED :"Failed"
+}
+
+export const LEADFORM_PREFERRED_LEARNING_MODE = {
+
+    ONLINE :"Online",
+    OFFLINE :"Offline",
+    HYBRID :"Hybrid"
+}
