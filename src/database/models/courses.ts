@@ -44,7 +44,7 @@ const courseSchema = new mongoose.Schema({
   testimonials: [testimonialSchema],
   faq: [faqSchema],
   priority: { type: Number, default: 1 },
-  // isActive: { type: Boolean, default: true },
+  features: { type: Boolean, default: false },
   isBlocked: { type: Boolean, default: false },
   isDeleted: { type: Boolean, default: false },
 }, { timestamps: true, versionKey: false });
