@@ -81,7 +81,6 @@ export const getBanner = async (req, res) => {
     }
 }
 
-
 export const deleteBanner = async (req, res) => {
     reqInfo(req)
     try {

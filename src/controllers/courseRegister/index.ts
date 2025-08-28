@@ -1,5 +1,3 @@
-
-import { config } from "../../../config";
 import { apiResponse } from "../../common";
 import { courseRegisterModel } from "../../database/models/courseRegister";
 import { reqInfo, responseMessage } from "../../helper"
@@ -7,6 +5,8 @@ import { countData, createData, findAllWithPopulate, getData, getFirstMatch, upd
 
 import Razorpay from 'razorpay'
 import crypto from 'crypto'
+import { userModel } from "../../database";
+import { webSettingModel } from "../../database/models/webSetting";
 
 const ObjectId = require('mongoose').Types.ObjectId
 
@@ -19,57 +19,84 @@ export const addCourseRegister = async (req, res) => {
 
         const newRegister = await courseRegisterModel.create(body);
 
-        const razorpay = new Razorpay({
-            key_id: config.RAZORPAY_KEY_ID as string,
-            key_secret: config.RAZORPAY_KEY_SECRET as string,
+        let order = new courseRegisterModel(body);
+        await order.save();
+
+        const razorpayOrder = await createRazorpayOrder({
+            amount:order.fees,
+            currency: "INR",
+            receipt: order._id.toString(),
         })
 
-        const order = await razorpay.orders.create({
-            amount : body.fees * 100, // amount in paise
-            currency: "INR",    
-            receipt: `receipt_${newRegister._id}`,
-        });
+   
 
-        newRegister.razorpayOrderId = order.id;
-        await newRegister.save();
-
-        return res.status(200).json(new apiResponse(200, responseMessage.addDataSuccess('Course Register'), {
-            user: newRegister,
-           order
+         if (!razorpayOrder) return res.status(500).json(new apiResponse(500, "Razorpay order failed", {}, {}));
+        order = await courseRegisterModel.findOneAndUpdate({ _id: new ObjectId(order._id) }, { razorpayOrderId: razorpayOrder.id }, { new: true });
+        return res.status(200).json(new apiResponse(200, responseMessage.addDataSuccess('Order'), {
+            order,
+            razorpayOrder
         }, {}));
 
 
-        // const response = await createData(courseRegisterModel, body);
-        // return res.status(200).json(new apiResponse(200, responseMessage.addDataSuccess('Course Register'), response, {}));
-   
     } catch (error) {
         console.log(error);
         return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error));
     }
 }
-export const verifyRazorpayPayment = async (req,res)=>{
+
+export const createRazorpayOrder = async (payload) => {
+    const { amount, currency = 'INR', receipt } = payload;
+    try {
+        
+        const options = {
+            amount: amount,
+            currency,
+            receipt,
+        };
+
+        let user = await webSettingModel.findOne({  isDeleted: false }).select('razorpayKeyId razorpayKeySecret').lean()
+        console.log("user", user);
+        
+        const razorpay = new Razorpay({
+            key_id: user.razorpayKeyId,
+            key_secret: user.razorpayKeySecret,
+        })
+        console.log("razorpay", razorpay);
+        
+        const order = await razorpay.orders.create(options);
+        return order;
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+};
+export const verifyRazorpayPayment = async (req, res) => {
     reqInfo(req)
-    let {razorpay_order_id,razorpay_payment_id,razorpay_signature,email} = req.body;
-    try{
-        const sign = razorpay_order_id+"|"+razorpay_payment_id;
-        const exceptedSignature = crypto.createHmac("sha256",process.env.RAZORPAY_KEY_SECRET as string).update(sign.toString()).digest("hex");
+    let { razorpay_order_id, razorpay_payment_id, razorpay_signature, email } = req.body;
+    try {
+        const sign = razorpay_order_id + "|" + razorpay_payment_id;
+   
+          let user = await webSettingModel.findOne({  isDeleted: false }).select('razorpayKeyId razorpayKeySecret').lean()
 
+        const exceptedSignature = crypto.createHmac("sha256", user.razorpayKeySecret).update(sign).digest("hex");
+        console.log("exceptedSignature", exceptedSignature);
+        
 
-        if(exceptedSignature === razorpay_signature){
+        if (exceptedSignature === razorpay_signature) {
 
             await courseRegisterModel.findOneAndUpdate(
                 { email: email, razorpayOrderId: razorpay_order_id },
                 { paymentStatus: "success", razorpayPaymentId: razorpay_payment_id }
             )
-            return res.status(200).json(new apiResponse(200,responseMessage.paymentSuccess,{razorpay_order_id,razorpay_payment_id,razorpay_signature},{}));
+            return res.status(200).json(new apiResponse(200, responseMessage.paymentSuccess, { razorpay_order_id, razorpay_payment_id, razorpay_signature }, {}));
         }
-          return res.status(400).json(new apiResponse(400, responseMessage.paymentFailed, {
+        return res.status(400).json(new apiResponse(400, responseMessage.paymentFailed, {
             razorpay_order_id, razorpay_payment_id, razorpay_signature
         }, {}));
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
-        
+        return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error));
+
     }
 }
 export const editcourseRegister = async (req, res) => {
@@ -77,7 +104,7 @@ export const editcourseRegister = async (req, res) => {
     try {
         const body = req.body;
 
-        let isExist = await getFirstMatch(courseRegisterModel, { email: body.email , _id: { $ne: new ObjectId(body.courseRegisterId) } }, {}, { lean: true });
+        let isExist = await getFirstMatch(courseRegisterModel, { email: body.email, _id: { $ne: new ObjectId(body.courseRegisterId) } }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('email'), {}, {}));
 
         const response = await updateData(courseRegisterModel, { _id: new ObjectId(body.courseRegisterId) }, body, {});
@@ -109,26 +136,21 @@ export const getCourseRegister = async (req, res) => {
             options.limit = parseInt(limit);
         }
 
-    //     let populate = [{
-    //         path: 'courseId', select: 'title subtitle background shortDescription duration skillLevelId price totalLectures totalHours ',
-    //     },{
-    //         path:'couponCodeId' , select : 'name code description discount discountType  startDate endDate numberOfUses usedCount isActive isDeleted isBlocked',
-    //  } ]
-     
-let populate = [
-  {
-    path: 'courseId',
-    select: 'title subtitle background shortDescription duration skillLevelId price totalLectures totalHours '
-  },
-  {
-    path: 'couponCodeId',
-    select: 'name code description discount discountType  startDate endDate numberOfUses usedCount isActive isDeleted isBlocked'
-  }
-]
+
+        let populate = [
+            {
+                path: 'courseId',
+                select: 'title subtitle background shortDescription duration skillLevelId price totalLectures totalHours '
+            },
+            {
+                path: 'couponCodeId',
+                select: 'name code description discount discountType  startDate endDate numberOfUses usedCount isActive isDeleted isBlocked'
+            }
+        ]
 
 
-     const response = await findAllWithPopulate(courseRegisterModel, criteria, {}, options, populate);
-     console.log("=======",populate);
+        const response = await findAllWithPopulate(courseRegisterModel, criteria, {}, options, populate);
+       
         const totalCount = await countData(courseRegisterModel, criteria);
 
         const stateObj = {

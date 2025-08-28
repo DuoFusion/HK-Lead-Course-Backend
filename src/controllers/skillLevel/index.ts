@@ -4,7 +4,6 @@ import { skillLevelModel } from "../../database/models/skillLevel";
 import { reqInfo, responseMessage } from "../../helper"
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
-
 const ObjectId = require('mongoose').Types.ObjectId
 
 export const addSkillLevel = async(req,res)=>{
@@ -22,7 +21,6 @@ export const addSkillLevel = async(req,res)=>{
         console.log(error);
         return res.status(500).json(new apiResponse(500,responseMessage?.internalServerError,{},error))
         
-
     }
 }
 
@@ -30,15 +28,12 @@ export const editSkillLevel = async(req,res)=>{
     reqInfo(req)
     try{
         const body = req.body;
-        console.log("body",body.priority);
         
         let isExist = await getFirstMatch(skillLevelModel,{priority:body.priority,_id:{$ne:new ObjectId(body.skillLevelId)}},{},{lean:true});
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist('Priority'),{},{}));
-     
         
         const response = await updateData(skillLevelModel,{_id:new ObjectId(body.skillLevelId),isDeleted:false},body,{new:true});
-        // console.log("response",response);
-          
+        
         if(!response) return res.status(404).json(new apiResponse(404,responseMessage?.getDataNotFound('Skill Level'),{},{}))
 
             return res.status(200).json(new apiResponse(200,responseMessage?.updateDataSuccess('Skill Level'),response,{}))

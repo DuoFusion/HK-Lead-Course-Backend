@@ -13,6 +13,6 @@ export const config = {
   MAIL: process.env.MAIL,
   FCM_KEY: process.env.FCM_KEY,
   BACKEND_URL: process.env.BACKEND_URL,
-  RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
-  RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET
+  // RAZORPAY_KEY_ID: process.env.RAZORPAY_KEY_ID,
+  // RAZORPAY_KEY_SECRET: process.env.RAZORPAY_KEY_SECRET
 }

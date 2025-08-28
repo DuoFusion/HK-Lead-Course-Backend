@@ -5,10 +5,8 @@ import { adminJWT } from '../helper';
 const router = express.Router()
 
 
-// router.post('/add',addWorkShopRegister)
 router.post('/add',addWorkShopRegister)
 router.post('/verify',verifyRazorpayPayment)
-// router.post('/razorpay',createRazorpayworkshopRegister)
 router.use(adminJWT)
 router.post('/edit',updateworkshopRegister)
 router.get('/',getworkshopRegister)

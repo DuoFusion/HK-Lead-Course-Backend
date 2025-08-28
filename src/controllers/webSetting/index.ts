@@ -3,7 +3,6 @@ import {  webSettingModel } from "../../database/models/webSetting"
 import { reqInfo, responseMessage } from "../../helper"
 import { addEditwebSettingSchema } from "../../validation/web-Setting"
 
-
 const ObjectId = require('mongoose').Types.ObjectId
 
 export const add_edit_web_Setting = async(req,res)=>{
@@ -19,7 +18,6 @@ export const add_edit_web_Setting = async(req,res)=>{
             return res.status(500).json(new apiResponse(500, responseMessage?.internalServerError, {}, error))
         }
 }
-
 
 export const get_web_Setting = async (req, res) => {
     reqInfo(req)

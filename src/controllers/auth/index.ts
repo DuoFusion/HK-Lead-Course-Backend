@@ -52,16 +52,9 @@ export const login = async (req, res) => {
         const passwordMatch = await bcryptjs.compare(body.password, response.password)
         if (!passwordMatch) return res.status(404).json(new apiResponse(404, responseMessage?.invalidUserPasswordEmail, {}, {}));
 
-        const token = jwt.sign({
-            _id: response._id,
-            type: response.userType,
-            status: "Login",
-            generatedOn: (new Date().getTime())
-        }, jwt_token_secret)
+        const token = jwt.sign({ _id: response._id,type: response.userType,status: "Login", generatedOn: (new Date().getTime()) }, jwt_token_secret)
 
-        await new userSessionModel({
-            createdBy: response._id,
-        }).save()
+        await new userSessionModel({ createdBy: response._id,}).save()
 
         response = {
             user: {
@@ -78,7 +71,6 @@ export const login = async (req, res) => {
         }
 
         return res.status(200).json(new apiResponse(200, responseMessage?.loginSuccess, response, {}));
-
 
     } catch (error) {
         console.log(error);

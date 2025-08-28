@@ -1,3 +1,5 @@
+import { WORKSHOP_REGISTER_PAYMENT_METHOD, WORKSHOP_REGISTER_PAYMENT_STATUS } from "../../common";
+
 var mongoose = require('mongoose');
 
 const workshopRegisterSchema = new mongoose.Schema({
@@ -8,10 +10,10 @@ const workshopRegisterSchema = new mongoose.Schema({
     city: { type: String },
     profession: { type: String },
     //  priority: { type: Number, default: 1 },
-    paymentStatus: {type:String, enum: ["Pending", "Success", "Failed"] },
+    paymentStatus: {type:String, enum:Object.values(WORKSHOP_REGISTER_PAYMENT_STATUS) },
     fees: { type: Number, required: true },
     couponCodeId: { type: mongoose.Schema.Types.ObjectId, ref: 'couponCode' },
-    paymentMethod: { type: String, enum: ["UPI", "Card", "NetBanking"], required: true },
+    paymentMethod: { type: String, enum:Object.values(WORKSHOP_REGISTER_PAYMENT_METHOD), required: true },
     transactionId: { type: String, required: true },
     isBlocked: { type: Boolean, default: false },
     isDeleted: { type: Boolean, default: false },

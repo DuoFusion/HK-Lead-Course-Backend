@@ -1,3 +1,4 @@
+import { WORKSHOP_STATUS } from "../../common";
 
 
 var mongoose = require('mongoose');
@@ -20,7 +21,7 @@ const workshopSchema = new mongoose.Schema({
 
   categoryId: { type: mongoose.Schema.Types.ObjectId, ref: 'category' },
 
-  status: { type: String, enum: ['pending', 'completed','cancelled'] },
+  status: { type: String, enum:Object.values(WORKSHOP_STATUS)},
   fullDescription: { type: String },
   syllabus: { type: String },
   faq: [faqSchema],   // 🔥 faq array of objects

@@ -14,7 +14,7 @@ const leadFormSchema = new mongoose.Schema({
     preferredLearningMode: {
         type: String,
         enum: Object.values(LEADFORM_PREFERRED_LEARNING_MODE),
-        default: "Online"
+        default: LEADFORM_PREFERRED_LEARNING_MODE.ONLINE
     },
     background: { type: String },          // e.g., "Engineering", "Commerce"
     itKnowledgeLevel: { type: String },    // e.g., "Beginner", "Intermediate", "Advanced"

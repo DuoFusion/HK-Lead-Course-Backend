@@ -13,7 +13,6 @@ export const addMentors = async(req,res)=>{
         let isExist = await getFirstMatch(mentorsModel,{priority:body.priority},{},{lean:true});
         if(isExist) return res.status(404).json(new apiResponse(404,responseMessage?.dataAlreadyExist('Priority'),{},{}));
 
-
         const response = await createData(mentorsModel,body);
         return res.status(200).json(new apiResponse(200,responseMessage?.addDataSuccess('Mentors'),response,{}));
 
@@ -22,16 +21,13 @@ export const addMentors = async(req,res)=>{
         return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
         
     }
-
 }
 
 export const editMentors = async(req,res)=>{
     reqInfo(req)
     try{
         const body = req.body;
-        // console.log("body",body);
-        
-
+      
         let isExist = await getFirstMatch(mentorsModel,{_id:new ObjectId(body.mentorsId)},{},{lean:true});
         if(!isExist) return res.status(404).json(new apiResponse(404,responseMessage?.getDataNotFound('Mentors'),{},{}));
 
@@ -86,9 +82,7 @@ export const deleteMentors = async(req,res)=>{
     reqInfo(req)
     try{
         
-        // console.log("req.params.id",req.params.id);
         let response = await updateData(mentorsModel,{_id:new ObjectId(req.params.id),isDeleted:false},{isDeleted:true},{new:true});
-        // console.log("response",response);
         
         if(!response) return res.status(404).json(new apiResponse(404,responseMessage.getDataNotFound('Mentors'),{},{}));
         return res.status(200).json(new apiResponse(200,responseMessage.deleteDataSuccess('Mentors'),response,{}));

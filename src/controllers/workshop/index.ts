@@ -1,19 +1,16 @@
-
 import { apiResponse } from "../../common";
 import { workshopModel } from "../../database/models/Workshop ";
 import { reqInfo, responseMessage } from "../../helper"
-import { countData, createData, findAllWithPopulate, findOneAndPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
-
-
+import { countData, createData, findAllWithPopulate, getFirstMatch, updateData } from "../../helper/database_service";
 const ObjectId = require('mongoose').Types.ObjectId
-
 
 export const addWorkshop = async (req, res) => {
 
     reqInfo(req)
     try {
         const body = req.body;
-        let isExist = await workshopModel.findOne({ type: body.type, priority: body.priority, isDeleted: false });
+
+        let isExist = await getFirstMatch(workshopModel, { type: body.type, priority: body.priority, isDeleted: false }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
 
         const response = await createData(workshopModel, body);
@@ -24,27 +21,18 @@ export const addWorkshop = async (req, res) => {
         console.log(error);
         return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error));
     }
-
 }
-
-
 
 export const updateWorkshop = async (req, res) => {
     reqInfo(req);
     try {
-
         const body = req.body;
 
-        console.log("body", body);
-        
-        let isExist = await workshopModel.findOne({ type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.workshopId) } });
+        let isExist = await getFirstMatch(workshopModel, { type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.workshopId) } }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
 
-        console.log("isExist", isExist);
-        
         const response = await updateData(workshopModel, { _id: new ObjectId(body.workshopId) }, body, {});
-        console.log("response", response);
-        
+
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Workshop'), response, {}));
 
 
@@ -79,10 +67,7 @@ export const getWorkshop = async (req, res) => {
         if (search) {
             criteria.title = { $regex: search, $options: 'si' };
         }
-
-        // (blockFilter === "true") ? criteria.isBlocked = true : criteria.isBlocked = false;
         if (blockFilter) criteria.isBlocked = blockFilter;
-        console.log("categoryFilter => ", categoryFilter)
         if (categoryFilter) {
             criteria.category = new ObjectId(categoryFilter);
         }
@@ -97,9 +82,8 @@ export const getWorkshop = async (req, res) => {
             options.limit = parseInt(limit);
         }
 
-        let populate = [
-            { path: 'categoryId', select: 'name priority' }]
-        console.log("come to the response")
+        let populate = [ { path: 'categoryId', select: 'name priority' }]
+  
         const response = await findAllWithPopulate(workshopModel, criteria, {}, options, populate);
         const totalCount = await countData(workshopModel, criteria);
 
@@ -119,19 +103,17 @@ export const getWorkshop = async (req, res) => {
     }
 }
 
-export const getWorkshopBYId = async(req,res)=>{
+export const getWorkshopBYId = async (req, res) => {
     reqInfo(req)
-    try{
+    try {
 
-        const {id} = req.params;
-        const response = await getFirstMatch(workshopModel,{_id:id},{},{lean:true});
-        // const response = await getFirstMatch(workshopModel,{_id:id},{});
-        return res.status(200).json(new apiResponse(200,responseMessage.getDataSuccess('Workshop'),response,{}));
-      
+        const { id } = req.params;
+        const response = await getFirstMatch(workshopModel, { _id: id }, {}, { lean: true });
+        return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('Workshop'), response, {}));
 
-    }catch(error){
+    } catch (error) {
         console.log(error);
-        return res.status(500).json(new apiResponse(500,responseMessage.internalServerError,{},error));
-        
+        return res.status(500).json(new apiResponse(500, responseMessage.internalServerError, {}, error));
+
     }
 }

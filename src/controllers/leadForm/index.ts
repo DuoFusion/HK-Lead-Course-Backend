@@ -3,7 +3,6 @@ import { leadFormModel } from "../../database/models/leadForm";
 import { reqInfo, responseMessage } from "../../helper";
 import { countData, createData, findAllWithPopulate, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
-
 const ObjectId = require('mongoose').Types.ObjectId
 
 export const addLeadForm = async (req, res) => {
@@ -11,9 +10,7 @@ export const addLeadForm = async (req, res) => {
     try {
 
         const body = req.body;
-        // let isExist = await getFirstMatch(leadFormModel, {}, {}, { lean: true });
-        // if (isExist) return res.status(404).json(new apiResponse(404, responseMessage.dataAlreadyExist('prority'), {}, {}));
-
+       
         let response = await createData(leadFormModel, body);
         return res.status(200).json(new apiResponse(200, responseMessage.getDataSuccess('lead form'), response, {}));
 
@@ -53,9 +50,7 @@ export const getLeadForm = async (req, res) => {
             criteria.fullName = { $regex: search, $options: 'si' };
         }
       
-
         options.sort = { priority: 1, createdAt: -1 };
-
 
         if (page && limit) {
             options.skip = (parseInt(page) - 1) * parseInt(limit);

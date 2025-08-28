@@ -3,7 +3,6 @@ import { interestModel } from "../../database/models/interest";
 import { reqInfo, responseMessage } from "../../helper";
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
-
 const ObjectId = require('mongoose').Types.ObjectId
 
 export const addInterest = async (req, res) => {
@@ -53,10 +52,7 @@ export const getInterest = async (req, res) => {
             criteria.name = { $regex: search, $options: 'si' };
         }
 
-
-
         options.sort = { priority: 1, createdAt: -1 };
-
 
         if (page && limit) {
             options.skip = (parseInt(page) - 1) * parseInt(limit);

@@ -10,9 +10,9 @@ export const addCourse = async (req, res) => {
     try {
         const body = req.body;
 
-        let isExist = await courseModel.findOne({ type: body.type, priority: body.priority, isDeleted: false });
+        let isExist = await getFirstMatch(courseModel, { type: body.type, priority: body.priority, isDeleted: false }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
-
+       
         const response = await createData(courseModel, body);
 
         return res.status(200).json(new apiResponse(200, responseMessage.addDataSuccess('Course'), response, {}));
@@ -30,7 +30,7 @@ export const editCourse = async (req, res) => {
     try {
         const body = req.body;
 
-        let isExist = await courseModel.findOne({ type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.courseId) } });
+        let isExist = await getFirstMatch(courseModel, { type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.courseId) } }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
 
         const response = await updateData(courseModel, { _id: new ObjectId(body.courseId) }, body, {});
@@ -131,18 +131,13 @@ export const course_testimonial_add = async (req, res) => {
     reqInfo(req)
     let body = req.body
     try {
-        // console.log("body", body);
-
+       
         let course = await getFirstMatch(courseModel, { _id: new ObjectId(body.courseId) }, {}, { lean: true });
-        // console.log("course", course);
-
+       
         if (!course) return res.status(404).json(new apiResponse(404, responseMessage.getDataNotFound('Course'), {}, {}));
-        // console.log("course", course);
-
-
+      
         let response = await updateData(courseModel, { _id: new ObjectId(body.courseId) }, { $push: { testimonials: body.testimonial } }, { new: true });
-        // console.log("response", response);
-
+      
         return res.status(200).json(new apiResponse(200, responseMessage.updateDataSuccess('Course'), response, {}));
     } catch (error) {
         console.log(error)

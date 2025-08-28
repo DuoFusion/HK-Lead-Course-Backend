@@ -3,7 +3,6 @@ import { testimonialModel } from "../../database/models/testomonial";
 import { reqInfo, responseMessage } from "../../helper";
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 
-
 const ObjectId = require('mongoose').Types.ObjectId
 
 export const addTestomonial = async (req, res) => {

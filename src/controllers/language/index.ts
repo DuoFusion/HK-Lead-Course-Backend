@@ -2,11 +2,7 @@ import { apiResponse } from "../../common";
 import { languageModel } from "../../database/models/language";
 import { reqInfo, responseMessage } from "../../helper"
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
-
-
-
 const ObjectId = require('mongoose').Types.ObjectId
-
 
 export const addLanguage = async (req, res) => {
     reqInfo(req)
@@ -33,7 +29,7 @@ export const editLanguage = async (req, res) => {
         const body = req.body;
         console.log("body", body);
 
-        let isExist = await languageModel.findOne({ type: body.type, priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.languageId) } });
+        let isExist = await getFirstMatch(languageModel, { priority: body.priority, isDeleted: false, _id: { $ne: new ObjectId(body.languageId) } }, {}, { lean: true });
         if (isExist) return res.status(404).json(new apiResponse(404, responseMessage?.dataAlreadyExist("priority"), {}, {}));
 
         const response = await updateData(languageModel, { _id: new ObjectId(body.languageId) }, body, {});

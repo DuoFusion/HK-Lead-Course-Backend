@@ -53,3 +53,25 @@ export const LEADFORM_PREFERRED_LEARNING_MODE = {
     OFFLINE :"Offline",
     HYBRID :"Hybrid"
 }
+
+export const WORKSHOP_STATUS = {
+
+    PENDING :"pending",
+    COMPLETED :"completed",
+    CANCELLED :"cancelled"
+}
+
+
+export const WORKSHOP_REGISTER_PAYMENT_METHOD = {
+
+    CARD :"Card",
+    UPI :"UPI",
+    NETBANKING :"NetBanking"
+}
+
+export const WORKSHOP_REGISTER_PAYMENT_STATUS = {
+
+    PENDING :"Pending",
+    SUCCESS :"Success",
+    FAILED :"Failed"
+}

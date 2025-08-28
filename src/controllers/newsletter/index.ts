@@ -2,7 +2,6 @@ import { apiResponse } from "../../common";
 import { newsLetterModel } from "../../database/models/newsletter";
 import { reqInfo, responseMessage } from "../../helper";
 
-
 let ObjectId = require('mongoose').Types.ObjectId;
 
 export const addNewsletter = async(req,res)=>{

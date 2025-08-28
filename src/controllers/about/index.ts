@@ -4,7 +4,6 @@ import { reqInfo, responseMessage } from "../../helper"
 import { countData, createData, getData, getFirstMatch, updateData } from "../../helper/database_service";
 import { addEditAboutUsSchema } from "../../validation/about-us";
 
-
 const ObjectId = require('mongoose').Types.ObjectId
 
 export const add_edit_about_us = async (req, res) => {
